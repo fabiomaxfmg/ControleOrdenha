@@ -44,7 +44,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
         jtfCodigoInseminador = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jtfCodigoVaca = new javax.swing.JTextField();
-        ComboSituacao = new javax.swing.JComboBox<>();
+        ComboSituacao = new javax.swing.JComboBox<String>();
 
         setMinimumSize(new java.awt.Dimension(579, 426));
 
@@ -102,7 +102,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Código Vaca:");
 
-        ComboSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboSituacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboSituacaoActionPerformed(evt);
