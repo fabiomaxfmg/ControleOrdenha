@@ -11,6 +11,10 @@ import dao.VacaDao;
 import javax.swing.JOptionPane;
 import model.Vaca;
 import model.Inseminador;
+import Manutencao.ManutencaoInseminador;
+import Manutencao.ManutencaoVaca;
+import dao.Ins_SituacaoDao;
+import model.Ins_situacao;
 
 /**
  *
@@ -23,16 +27,25 @@ public class InseminacaoView extends javax.swing.JFrame {
      */
     public InseminacaoView() {
         initComponents();
+
         //popular combobox Vaca
         VacaDao vdao = new VacaDao();
         for(Vaca v : vdao.consultar_obj()){
             cmbVaca.addItem(v);
         }
-        //popular combobox Insaeminador
+        
+        //popular combobox Inseminador
         InseminadorDao idao = new InseminadorDao();
         for(Inseminador i : idao.consultar_obj()){
             cmbInseminador.addItem(i);
         }
+
+        //popular combobox Situação
+        Ins_SituacaoDao ins = new Ins_SituacaoDao();
+        for(Ins_situacao in : ins.consultar_obj()){
+            cmbSituacao.addItem(in);
+        }
+        
         
     }
     
@@ -58,6 +71,8 @@ public class InseminacaoView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cmbInseminador = new javax.swing.JComboBox<Object>();
         cmbVaca = new javax.swing.JComboBox<Object>();
+        btnNovoInseminador = new javax.swing.JButton();
+        btnCadVaca = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +117,20 @@ public class InseminacaoView extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Data:");
 
+        btnNovoInseminador.setText("Cadastrar");
+        btnNovoInseminador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoInseminadorActionPerformed(evt);
+            }
+        });
+
+        btnCadVaca.setText("Cadastrar");
+        btnCadVaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadVacaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,18 +150,26 @@ public class InseminacaoView extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtfObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbInseminador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbVaca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnGravar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnGravar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(352, 352, 352)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCancelar)
+                            .addComponent(btnCadVaca, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmbVaca, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbInseminador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNovoInseminador)))
                 .addGap(33, 33, 33))
             .addGroup(layout.createSequentialGroup()
                 .addGap(186, 186, 186)
@@ -152,19 +189,21 @@ public class InseminacaoView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cmbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jtfObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cmbInseminador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbInseminador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovoInseminador))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(cmbVaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addComponent(cmbVaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCadVaca))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnGravar))
@@ -197,13 +236,31 @@ public class InseminacaoView extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnNovoInseminadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoInseminadorActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        ManutencaoInseminador form = new ManutencaoInseminador(this, true);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
+
+    }//GEN-LAST:event_btnNovoInseminadorActionPerformed
+
+    private void btnCadVacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadVacaActionPerformed
+        dispose();
+        Manutencao.ManutencaoVaca form = new ManutencaoVaca(this, true);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
+    }//GEN-LAST:event_btnCadVacaActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCadVaca;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
+    private javax.swing.JButton btnNovoInseminador;
     private javax.swing.JComboBox<Object> cmbInseminador;
     private javax.swing.JComboBox<Object> cmbSituacao;
     private javax.swing.JComboBox<Object> cmbVaca;

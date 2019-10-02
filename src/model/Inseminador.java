@@ -28,5 +28,12 @@ public class Inseminador {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return getNome(); //To change body of generated methods, choose Tools | Templates.
+    }
     
+    
+         
 }
