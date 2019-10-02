@@ -89,6 +89,28 @@ public class InseminacaoDao {
         }
     }
 
+        public static List<String[]> consultar_situacao() {
+        List<String[]> resultados = new ArrayList<>();
+        String sql = "SELECT codigo, nome FROM inssituacao";
+        PreparedStatement ps;
+        try {
+            ps = conexao.Conexao.getConexao().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String[] linha = new String[2];
+                linha[0] = rs.getString("codigo");
+                linha[1] = rs.getString("nome");
+
+                resultados.add(linha);
+            }
+            return resultados;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(VacaDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    
     public static Map<String, String> consultar(String pk) {
         Map<String, String> resultado = new HashMap<>();
         String sql = "SELECT codigo, data, situacao, observacao, cod_inseminador, cod_vaca FROM inseminacao WHERE codigo=?";

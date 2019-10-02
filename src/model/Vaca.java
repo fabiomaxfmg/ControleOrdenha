@@ -14,8 +14,8 @@ import java.util.Date;
 public class Vaca {
     private int brinco;
     private String nome;
-    private Date data_nascimento;
-    private int situacao;
+    private String data_nascimento;
+    private int cod_situacao;
     private int brinco_mae;
     private int cod_raca;
     private int cod_touro;
@@ -36,22 +36,23 @@ public class Vaca {
         this.nome = nome;
     }
 
-    public Date getData_nascimento() {
+    public String getData_nascimento() {
         return data_nascimento;
     }
 
-    public void setData_nascimento(Date data_nascimento) {
+    public void setData_nascimento(String data_nascimento) {
         this.data_nascimento = data_nascimento;
     }
 
-    public int getSituacao() {
-        return situacao;
+    public int getCod_situacao() {
+        return cod_situacao;
     }
 
-    public void setSituacao(int situacao) {
-        this.situacao = situacao;
+    public void setCod_situacao(int cod_situacao) {
+        this.cod_situacao = cod_situacao;
     }
 
+    
     public int getBrinco_mae() {
         return brinco_mae;
     }
@@ -75,5 +76,11 @@ public class Vaca {
     public void setCod_touro(int cod_touro) {
         this.cod_touro = cod_touro;
     }
+
+    @Override
+    public String toString() {
+        return getNome(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

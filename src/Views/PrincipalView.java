@@ -133,6 +133,10 @@ public class PrincipalView extends javax.swing.JFrame {
 
     private void btnRelProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelProducaoActionPerformed
         // TODO add your handling code here:
+        ProducaoView form = new ProducaoView(this, true);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
+                
     }//GEN-LAST:event_btnRelProducaoActionPerformed
 
     private void btnRelVacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelVacasActionPerformed

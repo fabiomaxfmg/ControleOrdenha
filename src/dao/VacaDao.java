@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Vaca;
+import model.vaca_situacao;
 
 public class VacaDao {
 
@@ -63,24 +65,47 @@ public class VacaDao {
         }
     }
 
-    public static List<String[]> consultar() {
-        List<String[]> resultados = new ArrayList<>();
-        String sql = "SELECT brinco, nome, data_nascimento, situacao, brinco_mae, cod_raca, cod_touro FROM vaca";
+    
+    
+    public static List<Vaca> consultar() {
+        List<Vaca> resultados = new ArrayList<>();
+        String sql = "SELECT brinco, nome, data_nascimento, cod_situacao, brinco_mae, cod_raca, cod_touro FROM vaca";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String[] linha = new String[3];
-                linha[0] = rs.getString("brinco");
-                linha[1] = rs.getString("nome");
-                linha[2] = rs.getString("data_nascimento");
-                linha[3] = rs.getString("situacao");
-                linha[4] = rs.getString("brinco_mae");
-                linha[5] = rs.getString("cod_raca");
-                linha[6] = rs.getString("cod_touro");
+                Vaca v = new Vaca();
+                v.setBrinco(rs.getInt("brinco"));
+                v.setNome(rs.getString("nome"));
+                v.setData_nascimento(rs.getString("data_nascimento"));
+                v.setCod_situacao(rs.getInt("cod_situacao"));
+                v.setBrinco_mae(rs.getInt("brinco_mae"));
+                v.setCod_raca(rs.getInt("cod_raca"));
+                v.setCod_touro(rs.getInt("cod_touro"));
+                        
+                
+                resultados.add(v);
+            }
+            return resultados;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(VacaDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    public static List<vaca_situacao> consultar_situacao() {
+        List<vaca_situacao> resultados = new ArrayList<>();
+        String sql = "SELECT codigo, nome FROM vacasituacao";
+        PreparedStatement ps;
+        try {
+            ps = conexao.Conexao.getConexao().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                vaca_situacao v = new vaca_situacao();
+                v.setCodigo(rs.getInt("brinco"));
+                v.setNome(rs.getString("nome"));
 
-                resultados.add(linha);
+                resultados.add(v);
             }
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {

@@ -5,12 +5,10 @@
  */
 package Views;
 
-import conexao.Conexao;
 import dao.InseminacaoDao;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import dao.VacaDao;
 import javax.swing.JOptionPane;
+import model.Vaca;
 
 /**
  *
@@ -23,60 +21,13 @@ public class InseminacaoView extends javax.swing.JFrame {
      */
     public InseminacaoView() {
         initComponents();
-        this.selectSituacaoInseminacao();
-    }
-    
-    public void selectSituacaoInseminacao() {
-        
-        String sql = "SELECT * FROM insSituacao ORDER BY nome"; //alterar tabela e atributos
-
-        try {
-            Statement stmt = Conexao.getConexao().createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            cmbSituacao.removeAllItems();
-            while (rs.next()) {
-                cmbSituacao.addItem(rs.getString("nome"));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+        //popular combobox Vaca
+        VacaDao vdao = new VacaDao();
+        for(Vaca v : vdao.consultar()){
+            cmbVaca.addItem(v);
         }
-    }
-    
-    public void selectInseminador() {
         
-        String sql = "SELECT * FROM inseminador ORDER BY nome"; //alterar tabela e atributos
-
-        try {
-            Statement stmt = Conexao.getConexao().createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            cmbInseminador.removeAllItems();
-            while (rs.next()) {
-                cmbInseminador.addItem(rs.getString("nome"));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
     }
-    
-    public void selectVaca() {
-        
-        String sql = "SELECT brinco, nome FROM vaca ORDER BY nome"; //alterar tabela e atributos
-
-        try {
-            Statement stmt = Conexao.getConexao().createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            cmbVaca.removeAllItems();
-            while (rs.next()) {
-                cmbVaca.addItem(rs.getString("nome"));
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,15 +42,15 @@ public class InseminacaoView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jtfData = new javax.swing.JTextField();
-        cmbSituacao = new javax.swing.JComboBox<String>();
+        cmbSituacao = new javax.swing.JComboBox<Object>();
         btnGravar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jtfObservacao = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cmbInseminador = new javax.swing.JComboBox();
-        cmbVaca = new javax.swing.JComboBox();
+        cmbInseminador = new javax.swing.JComboBox<Object>();
+        cmbVaca = new javax.swing.JComboBox<Object>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,7 +63,6 @@ public class InseminacaoView extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Observação:");
 
-        cmbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbSituacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbSituacaoActionPerformed(evt);
@@ -145,42 +95,37 @@ public class InseminacaoView extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Data:");
 
-        cmbInseminador.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cmbVaca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(35, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(28, 28, 28)
-                            .addComponent(jtfData))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jtfObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cmbInseminador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cmbVaca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(btnGravar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnCancelar))))
+                        .addComponent(cmbSituacao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(28, 28, 28)
+                        .addComponent(jtfData))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbInseminador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbVaca, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnGravar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCancelar)))
                 .addGap(33, 33, 33))
             .addGroup(layout.createSequentialGroup()
                 .addGap(186, 186, 186)
@@ -248,44 +193,13 @@ public class InseminacaoView extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InseminacaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InseminacaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InseminacaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InseminacaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InseminacaoView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
-    private javax.swing.JComboBox cmbInseminador;
-    private javax.swing.JComboBox<String> cmbSituacao;
-    private javax.swing.JComboBox cmbVaca;
+    private javax.swing.JComboBox<Object> cmbInseminador;
+    private javax.swing.JComboBox<Object> cmbSituacao;
+    private javax.swing.JComboBox<Object> cmbVaca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

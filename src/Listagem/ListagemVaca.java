@@ -4,6 +4,7 @@ import Manutencao.ManutencaoVaca;
 import dao.VacaDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.Vaca;
 
 public class ListagemVaca extends javax.swing.JDialog {
 
@@ -23,8 +24,8 @@ public class ListagemVaca extends javax.swing.JDialog {
         modelo.addColumn("Nome");
         modelo.addColumn("Código");
         modelo.addColumn("Data de nascimento");
-        List<String[]> resultados = VacaDao.consultar();
-        for (String[] linha : resultados) {
+        List<Vaca> resultados = VacaDao.consultar();
+        for (Vaca linha : resultados) {
             modelo.addRow(linha);
         }
         tabela.setModel(modelo);
