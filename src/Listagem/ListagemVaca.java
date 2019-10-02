@@ -12,25 +12,25 @@ public class ListagemVaca extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        //atualizarTabela();
+        atualizarTabela();
     }
 
     private ListagemVaca() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-/*
+
     public void atualizarTabela() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nome");
         modelo.addColumn("Código");
         modelo.addColumn("Data de nascimento");
-        List<Vaca> resultados = VacaDao.consultar();
-        for (Vaca linha : resultados) {
+        List<String[]> resultados = VacaDao.consultar();
+        for (String[] linha : resultados) {
             modelo.addRow(linha);
         }
         tabela.setModel(modelo);
     }
-*/
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

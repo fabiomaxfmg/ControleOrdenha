@@ -65,9 +65,33 @@ public class VacaDao {
         }
     }
 
+        public static List<String[]> consultar() {
+        List<String[]> resultados = new ArrayList<>();
+        String sql = "SELECT codigo, nome, data_nascimento, cod_raca, cod_mae, cod_touro FROM vaca";
+        PreparedStatement ps;
+        try {
+            ps = conexao.Conexao.getConexao().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String[] linha = new String[3];
+                linha[0] = rs.getString("codigo");
+                linha[1] = rs.getString("nome");
+                linha[2] = rs.getString("data_nascimento");
+                linha[3] = rs.getString("cod_raca");
+                linha[4] = rs.getString("cod_mae");
+                linha[5] = rs.getString("cod_touro");
+
+                resultados.add(linha);
+            }
+            return resultados;
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(VacaDao.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
     
-    
-    public static List<Vaca> consultar() {
+    public static List<Vaca> consultar_obj() {
         List<Vaca> resultados = new ArrayList<>();
         String sql = "SELECT brinco, nome, data_nascimento, cod_situacao, brinco_mae, cod_raca, cod_touro FROM vaca";
         PreparedStatement ps;

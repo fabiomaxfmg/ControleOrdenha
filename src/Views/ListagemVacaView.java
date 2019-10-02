@@ -112,7 +112,7 @@ public class ListagemVacaView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), jtfObservacao.getText(), jtfCodigoInseminador.getText(), jtfCodigoVaca.getText());
+/*        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), jtfObservacao.getText(), jtfCodigoInseminador.getText(), jtfCodigoVaca.getText());
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -123,6 +123,7 @@ public class ListagemVacaView extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
+        */
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

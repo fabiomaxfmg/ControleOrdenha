@@ -258,7 +258,7 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
     }//GEN-LAST:event_jtfCodigoTouro1ActionPerformed
 
     private void btnAlterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterar1ActionPerformed
-       boolean resultado = VacaDao.alterar(jtfCodigo1.getText(), jtfNome1.getText(), jtfDataNascimento1.getText(), jtfCodigoMae1.getText(), jtfCodigoRaca1.getText(), jtfCodigoTouro1.getText());
+/*       boolean resultado = VacaDao.alterar(jtfCodigo1.getText(), jtfNome1.getText(), jtfDataNascimento1.getText(), jtfCodigoMae1.getText(), jtfCodigoRaca1.getText(), jtfCodigoTouro1.getText());
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 
@@ -269,10 +269,11 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
+        */
     }//GEN-LAST:event_btnAlterar1ActionPerformed
 
     private void btnAdicionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionar1ActionPerformed
-        boolean resultado = VacaDao.inserir(jtfNome1.getText(), jtfDataNascimento1.getText(), jtfCodigoMae1.getText(), jtfCodigoRaca1.getText(), jtfCodigoTouro1.getText());
+/*        boolean resultado = VacaDao.inserir(jtfNome1.getText(), jtfDataNascimento1.getText(), jtfCodigoMae1.getText(), jtfCodigoRaca1.getText(), jtfCodigoTouro1.getText());
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -291,10 +292,11 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
         jtfCodigoMae1.setText("");
         jtfCodigoRaca1.setText("");
         jtfCodigoTouro1.setText("");
-    }                     
+*/
+        }                     
     
     private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
-        boolean resultado = VacaDao.excluir(jtfCodigo.getText());
+ /*       boolean resultado = VacaDao.excluir(jtfCodigo.getText());
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
 
@@ -305,6 +307,7 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
+        */
     }//GEN-LAST:event_btnExcluir1ActionPerformed
 
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed

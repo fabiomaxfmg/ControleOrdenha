@@ -25,16 +25,14 @@ public class InseminacaoView extends javax.swing.JFrame {
         initComponents();
         //popular combobox Vaca
         VacaDao vdao = new VacaDao();
-        for(Vaca v : vdao.consultar()){
+        for(Vaca v : vdao.consultar_obj()){
             cmbVaca.addItem(v);
         }
         //popular combobox Insaeminador
         InseminadorDao idao = new InseminadorDao();
-        for(Inseminador i : idao.consultar()){
+        for(Inseminador i : idao.consultar_obj()){
             cmbInseminador.addItem(i);
         }
-        
-        
         
     }
     
