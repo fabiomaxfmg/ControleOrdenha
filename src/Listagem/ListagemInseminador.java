@@ -4,6 +4,7 @@ import Manutencao.ManutencaoInseminador;
 import dao.InseminadorDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.Inseminador;
 
 public class ListagemInseminador extends javax.swing.JDialog {
 
@@ -22,8 +23,8 @@ public class ListagemInseminador extends javax.swing.JDialog {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Código");
         modelo.addColumn("Nome");
-        List<String[]> resultados = InseminadorDao.consultar();
-        for (String[] linha : resultados) {
+        List<Inseminador> resultados = InseminadorDao.consultar();
+        for (Inseminador linha : resultados) {
             modelo.addRow(linha);
         }
         tabela.setModel(modelo);

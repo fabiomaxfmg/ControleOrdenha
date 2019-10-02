@@ -6,9 +6,11 @@
 package Views;
 
 import dao.InseminacaoDao;
+import dao.InseminadorDao;
 import dao.VacaDao;
 import javax.swing.JOptionPane;
 import model.Vaca;
+import model.Inseminador;
 
 /**
  *
@@ -26,6 +28,13 @@ public class InseminacaoView extends javax.swing.JFrame {
         for(Vaca v : vdao.consultar()){
             cmbVaca.addItem(v);
         }
+        //popular combobox Insaeminador
+        InseminadorDao idao = new InseminadorDao();
+        for(Inseminador i : idao.consultar()){
+            cmbInseminador.addItem(i);
+        }
+        
+        
         
     }
     

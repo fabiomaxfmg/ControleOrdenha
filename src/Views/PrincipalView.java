@@ -126,9 +126,9 @@ public class PrincipalView extends javax.swing.JFrame {
 
     private void btnInseminacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInseminacaoActionPerformed
         // TODO add your handling code here:
-        InseminacaoView form = new InseminacaoView(this, true);
-        form.setLocationRelativeTo(null);
-        form.setVisible(true);
+        InseminacaoView ins = new InseminacaoView();
+        ins.setLocationRelativeTo(null);
+        ins.setVisible(true);
     }//GEN-LAST:event_btnInseminacaoActionPerformed
 
     private void btnRelProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelProducaoActionPerformed

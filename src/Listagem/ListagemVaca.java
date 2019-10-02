@@ -12,13 +12,13 @@ public class ListagemVaca extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        atualizarTabela();
+        //atualizarTabela();
     }
 
     private ListagemVaca() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+/*
     public void atualizarTabela() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nome");
@@ -30,7 +30,7 @@ public class ListagemVaca extends javax.swing.JDialog {
         }
         tabela.setModel(modelo);
     }
-
+*/
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

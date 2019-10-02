@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Inseminador;
 
 public class InseminadorDao {
 
@@ -53,18 +54,18 @@ public class InseminadorDao {
         }
     }
 
-    public static List<String[]> consultar() {
-        List<String[]> resultados = new ArrayList<>();
+    public static List<Inseminador> consultar() {
+        List<Inseminador> resultados = new ArrayList<>();
         String sql = "SELECT codigo, nome FROM inseminador";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String[] linha = new String[2];
-                linha[0] = rs.getString("codigo");
-                linha[1] = rs.getString("nome");
-                resultados.add(linha);
+                Inseminador i = new Inseminador();
+                i.setCodigo(rs.getInt("codigo"));
+                i.setNome(rs.getString("nome"));
+                resultados.add(i);
             }
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -92,12 +93,4 @@ public class InseminadorDao {
         }
     }
 
-    public static void main(String[] args) {
-        boolean resultado = inserir("Jose");
-        if (resultado) {
-            JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro!");
-        }
-    }
 }
