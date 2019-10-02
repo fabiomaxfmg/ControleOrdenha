@@ -27,7 +27,7 @@ public class InseminadorDao {
     }
 
     public static boolean alterar(String codigo, String nome) {
-        String sql = "UPDATE touro SET nome = ? WHERE codigo = ?";
+        String sql = "UPDATE inseminador SET nome = ? WHERE codigo = ?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, nome);

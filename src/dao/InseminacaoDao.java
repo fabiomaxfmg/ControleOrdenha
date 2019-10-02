@@ -19,10 +19,8 @@ public class InseminacaoDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, data);
             ps.setInt(2, Integer.parseInt(situacao));
-            ps.executeUpdate();
             ps.setString(3, observacao);
             ps.setInt(4, Integer.parseInt(cod_inseminador));
-            ps.executeUpdate();
             ps.setInt(5, Integer.parseInt(cod_vaca));
             ps.executeUpdate();
 
@@ -45,8 +43,8 @@ public class InseminacaoDao {
             ps.setString(4, cod_inseminador);
             ps.setString(5, cod_vaca);
             ps.setString(6, codigo);
-
             ps.executeUpdate();
+
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());

@@ -1,0 +1,79 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model;
+
+import java.util.Date;
+
+/**
+ *
+ * @author fabio
+ */
+public class Vaca {
+    private int brinco;
+    private String nome;
+    private Date data_nascimento;
+    private int situacao;
+    private int brinco_mae;
+    private int cod_raca;
+    private int cod_touro;
+
+    public int getBrinco() {
+        return brinco;
+    }
+
+    public void setBrinco(int brinco) {
+        this.brinco = brinco;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Date getData_nascimento() {
+        return data_nascimento;
+    }
+
+    public void setData_nascimento(Date data_nascimento) {
+        this.data_nascimento = data_nascimento;
+    }
+
+    public int getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(int situacao) {
+        this.situacao = situacao;
+    }
+
+    public int getBrinco_mae() {
+        return brinco_mae;
+    }
+
+    public void setBrinco_mae(int brinco_mae) {
+        this.brinco_mae = brinco_mae;
+    }
+
+    public int getCod_raca() {
+        return cod_raca;
+    }
+
+    public void setCod_raca(int cod_raca) {
+        this.cod_raca = cod_raca;
+    }
+
+    public int getCod_touro() {
+        return cod_touro;
+    }
+
+    public void setCod_touro(int cod_touro) {
+        this.cod_touro = cod_touro;
+    }
+    
+}
