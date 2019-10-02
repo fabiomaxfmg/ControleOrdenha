@@ -1,30 +1,29 @@
-package Prototipos;
+
+package Views;
 
 import Listagem.*;
-import Manutencao.ManutencaoVaca;
-import dao.VacaDao;
+import Manutencao.ManutencaoProducao;
+import dao.ProducaoDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class ListagemVacaView extends javax.swing.JDialog {
+public class ListagemProducaoView extends javax.swing.JDialog {
 
-    public ListagemVacaView(java.awt.Frame parent, boolean modal) {
+    public ListagemProducaoView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        
         atualizarTabela();
     }
 
-    private ListagemVacaView() {
+    private ListagemProducaoView() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     public void atualizarTabela() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nome");
-        modelo.addColumn("Código");
-        modelo.addColumn("Data de nascimento");
-        List<String[]> resultados = VacaDao.consultar();
+        modelo.addColumn("Data");
+        modelo.addColumn("Produção em litros");
+        List<String[]> resultados = ProducaoDao.consultar();
         for (String[] linha : resultados) {
             modelo.addRow(linha);
         }
@@ -44,17 +43,17 @@ public class ListagemVacaView extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Listagem Vaca");
+        jLabel1.setText("Listagem Produção");
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Nome", "Código", "Data Nascimento", "Código Raça", "Código Mãe", "Código Touro"
+                "Data", "Produção em litros"
             }
         ));
         jScrollPane1.setViewportView(tabela);
@@ -80,32 +79,31 @@ public class ListagemVacaView extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(237, 237, 237)
+                .addGap(152, 152, 152)
                 .addComponent(jLabel1)
-                .addContainerGap(246, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdicionar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar)))
-                .addContainerGap())
+                        .addComponent(btnCancelar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel1)
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(68, 68, 68)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAdicionar))
-                .addGap(26, 26, 26))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -130,7 +128,7 @@ public class ListagemVacaView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     public static void main(String args[]) {
-
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -143,23 +141,24 @@ public class ListagemVacaView extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListagemVacaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListagemProducaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListagemVacaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListagemProducaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListagemVacaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListagemProducaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListagemVacaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListagemProducaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
+      
+java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListagemVacaView().setVisible(true);
+                new ListagemProducaoView().setVisible(true);
             }
         });
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCancelar;
