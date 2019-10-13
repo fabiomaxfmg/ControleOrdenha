@@ -28,6 +28,7 @@ public class ListagemVacaView extends javax.swing.JDialog {
         modelo.addColumn("Data de nascimento");
         List<Vaca> resultados = VacaDao.consultar();
         for (Vaca linha : resultados) {
+            System.out.println(linha.getNome());
             String[] aa = {linha.getNome(),Integer.toString(linha.getBrinco()),linha.getData_nascimento().toString(),RacaDao.consultar(linha.getCod_raca()).getDescricao(),Integer.toString(linha.getBrinco_mae()),Integer.toString(linha.getCod_touro())};
             modelo.addRow(aa);
         }

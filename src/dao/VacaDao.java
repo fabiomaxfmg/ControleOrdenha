@@ -130,6 +130,7 @@ public class VacaDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vaca linha = new Vaca();
+                linha.setNome(rs.getString("nome"));
                 linha.setBrinco(rs.getInt("brinco"));
                 linha.setBrinco_mae(rs.getInt("brinco_mae"));
                 linha.setCod_raca(rs.getInt("cod_raca"));
