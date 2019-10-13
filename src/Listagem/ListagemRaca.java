@@ -4,6 +4,7 @@ import Manutencao.ManutencaoRaca;
 import dao.RacaDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.Raca;
 
 public class ListagemRaca extends javax.swing.JDialog {
 
@@ -18,9 +19,9 @@ public class ListagemRaca extends javax.swing.JDialog {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Código");
         modelo.addColumn("Descrição");
-        List<String[]> resultados = RacaDao.consultar();
-        for (String[] linha : resultados) {
-            modelo.addRow(linha);
+        List<Raca> resultados = RacaDao.consultar();
+        for (Raca linha : resultados) {
+            modelo.addRow(new String[]{Integer.toString(linha.getCodigo()),linha.getDescricao()});
         }
         tabela.setModel(modelo);
     }

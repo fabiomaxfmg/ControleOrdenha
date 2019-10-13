@@ -5,6 +5,7 @@ import Manutencao.ManutencaoProducao;
 import dao.ProducaoDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.Producao;
 
 public class ListagemProducao extends javax.swing.JDialog {
 
@@ -22,9 +23,9 @@ public class ListagemProducao extends javax.swing.JDialog {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Data");
         modelo.addColumn("Produção em litros");
-        List<String[]> resultados = ProducaoDao.consultar();
-        for (String[] linha : resultados) {
-            modelo.addRow(linha);
+        List<Producao> resultados = ProducaoDao.consultar();
+        for (Producao linha : resultados) {
+            modelo.addRow(new String[]{linha.getData().toString(),Integer.toString(linha.getProducao_litros())});
         }
         tabela.setModel(modelo);
     }

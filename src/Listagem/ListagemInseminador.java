@@ -23,9 +23,9 @@ public class ListagemInseminador extends javax.swing.JDialog {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Código");
         modelo.addColumn("Nome");
-        List<String[]> resultados = InseminadorDao.consultar();
-        for (String[] linha : resultados) {
-            modelo.addRow(linha);
+        List<Inseminador> resultados = InseminadorDao.consultar();
+        for (Inseminador linha : resultados) {
+            modelo.addRow(new String[]{Integer.toString(linha.getCodigo()),linha.getNome()});
         }
         tabela.setModel(modelo);
     }

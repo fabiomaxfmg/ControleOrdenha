@@ -2,8 +2,10 @@ package Listagem;
 
 import Manutencao.ManutencaoInseminacao;
 import dao.InseminacaoDao;
+import dao.Ins_SituacaoDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.Inseminacao;
 
 public class ListagemInseminacao extends javax.swing.JDialog {
 
@@ -24,11 +26,13 @@ public class ListagemInseminacao extends javax.swing.JDialog {
         modelo.addColumn("Data");
         modelo.addColumn("Situação");
         modelo.addColumn("Observação");
-        List<String[]> resultados = InseminacaoDao.consultar();
-        for (String[] linha : resultados) {
-            modelo.addRow(linha);
+        List<Inseminacao> resultados = InseminacaoDao.consultar();
+        for (Inseminacao ins : resultados) {
+            modelo.addRow(new String[]{Integer.toString(ins.getCodigo()),ins.getData().toString(),Ins_SituacaoDao.consultar(ins.getSituacao()).getNome(),ins.getObservacao()});
         }
+        
         tabela.setModel(modelo);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -55,7 +59,15 @@ public class ListagemInseminacao extends javax.swing.JDialog {
             new String [] {
                 "Código", "Data", "Situação", "Observação", "Código Inseminador", "Código Vaca"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabela);
 
         btnNovo.setText("Novo");

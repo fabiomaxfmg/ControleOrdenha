@@ -2,9 +2,11 @@ package Views;
 
 import Listagem.*;
 import Manutencao.ManutencaoVaca;
+import dao.RacaDao;
 import dao.VacaDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.Vaca;
 
 public class ListagemVacaView extends javax.swing.JDialog {
 
@@ -24,9 +26,10 @@ public class ListagemVacaView extends javax.swing.JDialog {
         modelo.addColumn("Nome");
         modelo.addColumn("Código");
         modelo.addColumn("Data de nascimento");
-        List<String[]> resultados = VacaDao.consultar();
-        for (String[] linha : resultados) {
-            modelo.addRow(linha);
+        List<Vaca> resultados = VacaDao.consultar();
+        for (Vaca linha : resultados) {
+            String[] aa = {linha.getNome(),Integer.toString(linha.getBrinco()),linha.getData_nascimento().toString(),RacaDao.consultar(linha.getCod_raca()).getDescricao(),Integer.toString(linha.getBrinco_mae()),Integer.toString(linha.getCod_touro())};
+            modelo.addRow(aa);
         }
         tabela.setModel(modelo);
     }
@@ -54,7 +57,7 @@ public class ListagemVacaView extends javax.swing.JDialog {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Código", "Data Nascimento", "Código Raça", "Código Mãe", "Código Touro"
+                "Nome", "Código", "Data Nascimento", "Raça", "Código Mãe", "Código Touro"
             }
         ));
         jScrollPane1.setViewportView(tabela);

@@ -139,7 +139,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfCodigoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        boolean resultado = TouroDao.alterar(jtfCodigo.getText(), jtfNome.getText(), jtfCodigoRaca.getText());
+        boolean resultado = TouroDao.alterar(Integer.parseInt(jtfCodigo.getText()), jtfNome.getText(), Integer.parseInt(jtfCodigoRaca.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 
@@ -153,7 +153,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        boolean resultado = TouroDao.inserir(jtfNome.getText(), jtfCodigoRaca.getText());
+        boolean resultado = TouroDao.inserir(jtfNome.getText(), Integer.parseInt(jtfCodigoRaca.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -172,7 +172,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
     }
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        boolean resultado = TouroDao.excluir(jtfCodigo.getText());
+        boolean resultado = TouroDao.excluir(Integer.parseInt(jtfCodigo.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
 

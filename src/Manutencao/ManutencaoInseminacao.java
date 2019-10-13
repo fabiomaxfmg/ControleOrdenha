@@ -2,7 +2,9 @@ package Manutencao;
 
 import Listagem.ListagemInseminacao;
 import dao.InseminacaoDao;
+import dao.Vaca_situacaoDao;
 import javax.swing.JOptionPane;
+import model.vaca_situacao;
 
 public class ManutencaoInseminacao extends javax.swing.JDialog {
 
@@ -11,7 +13,10 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
     public ManutencaoInseminacao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        for(vaca_situacao v : Vaca_situacaoDao.consultar()){
+            ComboSituacao.addItem(v);
+            
+        }
     }
 
     public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInseminacao listagem) {
@@ -44,7 +49,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
         jtfCodigoInseminador = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jtfCodigoVaca = new javax.swing.JTextField();
-        ComboSituacao = new javax.swing.JComboBox<String>();
+        ComboSituacao = new javax.swing.JComboBox<>();
 
         setMinimumSize(new java.awt.Dimension(579, 426));
 
@@ -102,7 +107,6 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Código Vaca:");
 
-        ComboSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboSituacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboSituacaoActionPerformed(evt);
@@ -202,7 +206,8 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        boolean resultado = InseminacaoDao.alterar(jtfCodigo.getText(), jtfData.getText(), jtfObservacao.getText(), jtfCodigoInseminador.getText(), jtfCodigoVaca.getText());
+        boolean resultado = InseminacaoDao.alterar(Integer.parseInt(jtfCodigo.getText()), jtfData.getText(),((vaca_situacao)ComboSituacao.getSelectedItem()).getCodigo() ,jtfObservacao.getText(), Integer.parseInt(jtfCodigoInseminador.getText()), Integer.parseInt(jtfCodigoVaca.getText()));
+        //InseminacaoDao.alterar(WIDTH, data, WIDTH, observacao, SOMEBITS, WIDTH);
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 
@@ -216,7 +221,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), jtfObservacao.getText(), jtfCodigoInseminador.getText(), jtfCodigoVaca.getText());
+        boolean resultado = InseminacaoDao.inserir(jtfData.getText(),((vaca_situacao)ComboSituacao.getSelectedItem()).getCodigo(), jtfObservacao.getText(), Integer.parseInt(jtfCodigoInseminador.getText()), Integer.parseInt(jtfCodigoVaca.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -236,7 +241,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
         jtfCodigoVaca.setText("");
     }
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        boolean resultado = InseminacaoDao.excluir(jtfCodigo.getText());
+        boolean resultado = InseminacaoDao.excluir(Integer.parseInt(jtfCodigo.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
 
@@ -264,7 +269,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboSituacao;
+    private javax.swing.JComboBox<model.vaca_situacao> ComboSituacao;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;

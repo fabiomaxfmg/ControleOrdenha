@@ -16,6 +16,10 @@ public class Ins_situacao {
     public int getCodigo() {
         return codigo;
     }
+    public String getcodAsString(){
+        return Integer.toString(codigo);
+    }
+
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;

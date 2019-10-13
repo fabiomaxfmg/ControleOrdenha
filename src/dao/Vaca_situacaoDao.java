@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dao;
 
 import java.sql.PreparedStatement;
@@ -9,13 +14,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import model.Inseminador;
+import model.vaca_situacao;
 
-public class InseminadorDao {
-
-    public static boolean inserir(String nome) {
-        String sql = "INSERT INTO inseminador (nome) VALUES (?)";
+/**
+ *
+ * @author fabio
+ */
+public class Vaca_situacaoDao {
+        public static boolean inserir(String nome) {
+        String sql = "INSERT INTO vacasituacao (nome) VALUES (?)";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, nome);
@@ -28,7 +35,7 @@ public class InseminadorDao {
     }
 
     public static boolean alterar(int codigo, String nome) {
-        String sql = "UPDATE inseminador SET nome = ? WHERE codigo = ?";
+        String sql = "UPDATE vacasituacao SET nome = ? WHERE codigo = ?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, nome);
@@ -42,7 +49,7 @@ public class InseminadorDao {
     }
 
     public static boolean excluir(int codigo) {
-        String sql = "DELETE FROM inseminador WHERE codigo = ?";
+        String sql = "DELETE FROM vacasituacao WHERE codigo = ?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, codigo);
@@ -54,15 +61,15 @@ public class InseminadorDao {
         }
     }
 
-    public static List<Inseminador> consultar() {
-        List<Inseminador> resultados = new ArrayList<>();
-        String sql = "SELECT codigo, nome FROM inseminador";
+    public static List<vaca_situacao> consultar_obj() {
+        List<vaca_situacao> resultados = new ArrayList<>();
+        String sql = "SELECT codigo, nome FROM vacasituacao";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Inseminador i = new Inseminador();
+                vaca_situacao i = new vaca_situacao();
                 i.setCodigo(rs.getInt("codigo"));
                 i.setNome(rs.getString("nome"));
                 resultados.add(i);
@@ -74,17 +81,17 @@ public class InseminadorDao {
         }
     }
 
-        /*public static List<String[]> consultar() {
-        List<String[]> resultados = new ArrayList<>();
-        String sql = "SELECT codigo, nome FROM inseminador";
+        public static List<vaca_situacao> consultar() {
+        List<vaca_situacao> resultados = new ArrayList<>();
+        String sql = "SELECT codigo, nome FROM vacasituacao";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String[] linha = new String[2];
-                linha[0] = rs.getString("codigo");
-                linha[1] = rs.getString("nome");
+                vaca_situacao linha = new vaca_situacao();
+                linha.setCodigo(rs.getInt("codigo"));
+                linha.setNome(rs.getString("nome"));
                 resultados.add(linha);
             }
             return resultados;
@@ -92,13 +99,13 @@ public class InseminadorDao {
             Logger.getLogger(InseminadorDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-    }*/
+    }
 
 
     
-    public static Inseminador consultar(int pk) {
-        Inseminador resultado = new Inseminador();
-        String sql = "SELECT codigo, nome FROM inseminador WHERE codigo=?";
+    public static vaca_situacao consultar(int pk) {
+        vaca_situacao resultado = new vaca_situacao();
+        String sql = "SELECT codigo, nome FROM vacasituacao WHERE codigo=?";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
@@ -115,8 +122,7 @@ public class InseminadorDao {
         }
     }
     public static void main(String[] args){
-        
-        
-    }
 
+    }
+    
 }

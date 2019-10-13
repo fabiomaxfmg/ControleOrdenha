@@ -14,7 +14,7 @@ import java.util.Date;
 public class Vaca {
     private int brinco;
     private String nome;
-    private String data_nascimento;
+    private Date data_nascimento;
     private int cod_situacao;
     private int brinco_mae;
     private int cod_raca;
@@ -36,11 +36,11 @@ public class Vaca {
         this.nome = nome;
     }
 
-    public String getData_nascimento() {
+    public Date getData_nascimento() {
         return data_nascimento;
     }
 
-    public void setData_nascimento(String data_nascimento) {
+    public void setData_nascimento(Date data_nascimento) {
         this.data_nascimento = data_nascimento;
     }
 

@@ -146,7 +146,7 @@ public class ManutencaoInseminador extends javax.swing.JDialog {
 
     }
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        boolean resultado = InseminadorDao.alterar(jtfCodigo.getText(), jtfNome.getText());
+        boolean resultado = InseminadorDao.alterar(Integer.parseInt(jtfCodigo.getText()), jtfNome.getText());
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 
@@ -180,7 +180,7 @@ public class ManutencaoInseminador extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAdicionar1ActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        boolean resultado = InseminadorDao.excluir(jtfCodigo.getText());
+        boolean resultado = InseminadorDao.excluir(Integer.parseInt(jtfCodigo.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
 

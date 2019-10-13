@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Manutencao.ManutencaoP7rincipal;
 import javax.swing.JOptionPane;
 import javax.swing.text.html.FormView;
 import Views.ProducaoView;
@@ -140,11 +141,15 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRelProducaoActionPerformed
 
     private void btnRelVacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelVacasActionPerformed
-        // TODO add your handling code here:
+        ListagemVacaView vacas = new ListagemVacaView(this, true);
+        vacas.setLocationRelativeTo(null);
+        vacas.setVisible(true);
     }//GEN-LAST:event_btnRelVacasActionPerformed
 
     private void btnCadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrosActionPerformed
-        // TODO add your handling code here:
+        Manutencao.ManutencaoP7rincipal man = new ManutencaoP7rincipal();
+        man.setLocationRelativeTo(null);
+        man.setVisible(true);
     }//GEN-LAST:event_btnCadastrosActionPerformed
 
     private void btnProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProducaoActionPerformed

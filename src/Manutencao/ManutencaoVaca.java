@@ -57,6 +57,8 @@ public class ManutencaoVaca extends javax.swing.JDialog {
         jtfCodigoMae1 = new javax.swing.JTextField();
         jtfCodigoRaca1 = new javax.swing.JTextField();
         jtfCodigoTouro1 = new javax.swing.JTextField();
+        situacao = new javax.swing.JLabel();
+        jtfsit = new javax.swing.JTextField();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,12 +107,10 @@ public class ManutencaoVaca extends javax.swing.JDialog {
         jLabel7.setText("Nome:");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Código:");
+        jLabel8.setText("Brinco:");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("Data de Nascimento:");
-
-        jtfCodigo1.setEnabled(false);
 
         btnExcluir1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExcluir1.setText("Excluir");
@@ -158,6 +158,8 @@ public class ManutencaoVaca extends javax.swing.JDialog {
             }
         });
 
+        situacao.setText("Codigo Situacao");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -194,11 +196,6 @@ public class ManutencaoVaca extends javax.swing.JDialog {
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtfCodigoRaca1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel12)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jtfCodigoTouro1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGap(160, 160, 160)
                             .addComponent(btnAdicionar1)
@@ -207,8 +204,19 @@ public class ManutencaoVaca extends javax.swing.JDialog {
                             .addGap(47, 47, 47)
                             .addComponent(btnExcluir1)
                             .addGap(35, 35, 35)
-                            .addComponent(btnCancelar1))))
-                .addContainerGap(164, Short.MAX_VALUE))
+                            .addComponent(btnCancelar1))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(situacao)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jtfsit, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jtfCodigoTouro1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,13 +247,17 @@ public class ManutencaoVaca extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfCodigoTouro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(situacao)
+                    .addComponent(jtfsit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar1)
                     .addComponent(btnAlterar1)
                     .addComponent(btnExcluir1)
                     .addComponent(btnCancelar1))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -273,7 +285,12 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
     }//GEN-LAST:event_btnAlterar1ActionPerformed
 
     private void btnAdicionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionar1ActionPerformed
-/*        boolean resultado = VacaDao.inserir(jtfNome1.getText(), jtfDataNascimento1.getText(), jtfCodigoMae1.getText(), jtfCodigoRaca1.getText(), jtfCodigoTouro1.getText());
+        boolean resultado;
+        if(jtfCodigoMae1.getText() == ""){
+            resultado = VacaDao.inserir(Integer.parseInt(jtfCodigo1.getText()), jtfNome1.getText(), jtfDataNascimento1.getText(),Integer.parseInt(jtfsit.getText()), Integer.parseInt(jtfCodigoRaca1.getText()), Integer.parseInt(jtfCodigoTouro1.getText()));
+        }else{
+            resultado = VacaDao.inserir(Integer.parseInt(jtfCodigo1.getText()), jtfNome1.getText(), jtfDataNascimento1.getText(),Integer.parseInt(jtfsit.getText()),Integer.parseInt(jtfCodigoMae1.getText()) ,Integer.parseInt(jtfCodigoRaca1.getText()), Integer.parseInt(jtfCodigoTouro1.getText()));
+        }
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -292,7 +309,7 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
         jtfCodigoMae1.setText("");
         jtfCodigoRaca1.setText("");
         jtfCodigoTouro1.setText("");
-*/
+
         }                     
     
     private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
@@ -385,5 +402,7 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JTextField jtfDataNascimento1;
     private javax.swing.JTextField jtfNome;
     private javax.swing.JTextField jtfNome1;
+    private javax.swing.JTextField jtfsit;
+    private javax.swing.JLabel situacao;
     // End of variables declaration//GEN-END:variables
 }

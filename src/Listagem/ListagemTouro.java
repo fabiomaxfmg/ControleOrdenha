@@ -2,9 +2,11 @@
 package Listagem;
 
 import Manutencao.ManutencaoTouro;
+import dao.RacaDao;
 import dao.TouroDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import model.Touro;
 
 
 public class ListagemTouro extends javax.swing.JDialog {
@@ -21,9 +23,9 @@ public class ListagemTouro extends javax.swing.JDialog {
         modelo.addColumn("Nome");
         modelo.addColumn("Código Raça");
         
-        List<String[]> resultados = TouroDao.consultar();
-        for (String[] linha : resultados) {
-            modelo.addRow(linha);
+        List<Touro> resultados = TouroDao.consultar();
+        for (Touro linha : resultados) {
+            modelo.addRow(new String[]{Integer.toString(linha.getCodigo()),linha.getNome(),RacaDao.consultar(linha.getCod_raca()).getDescricao()});
         }
         tabela.setModel(modelo);
     }

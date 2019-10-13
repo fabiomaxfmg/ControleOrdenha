@@ -1,6 +1,7 @@
 package Listagem;
 
 import Manutencao.ManutencaoVaca;
+import dao.RacaDao;
 import dao.VacaDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -24,9 +25,9 @@ public class ListagemVaca extends javax.swing.JDialog {
         modelo.addColumn("Nome");
         modelo.addColumn("Código");
         modelo.addColumn("Data de nascimento");
-        List<String[]> resultados = VacaDao.consultar();
-        for (String[] linha : resultados) {
-            modelo.addRow(linha);
+        List<Vaca> resultados = VacaDao.consultar();
+        for (Vaca linha : resultados) {
+            modelo.addRow(new String[]{linha.getNome(),Integer.toString(linha.getBrinco()),linha.getData_nascimento().toString(),RacaDao.consultar(linha.getCod_raca()).getDescricao(),Integer.toString(linha.getBrinco_mae()),Integer.toString(linha.getCod_touro())});
         }
         tabela.setModel(modelo);
     }

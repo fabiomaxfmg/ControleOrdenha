@@ -12,10 +12,19 @@ import java.util.Date;
  * @author fabio
  */
 public class Producao {
+    private int codigo;
     private Date data;
     private int producao_litros;
     private int nr_ordenha_uteis;
     private double mediapervaca;
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
     public Date getData() {
         return data;

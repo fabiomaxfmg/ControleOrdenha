@@ -36,7 +36,7 @@ public class InseminacaoView extends javax.swing.JFrame {
         
         //popular combobox Inseminador
         InseminadorDao idao = new InseminadorDao();
-        for(Inseminador i : idao.consultar_obj()){
+        for(Inseminador i : idao.consultar()){
             cmbInseminador.addItem(i);
         }
 
@@ -44,6 +44,7 @@ public class InseminacaoView extends javax.swing.JFrame {
         Ins_SituacaoDao ins = new Ins_SituacaoDao();
         for(Ins_situacao in : ins.consultar_obj()){
             cmbSituacao.addItem(in);
+            
         }
         
         
@@ -62,15 +63,15 @@ public class InseminacaoView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jtfData = new javax.swing.JTextField();
-        cmbSituacao = new javax.swing.JComboBox<Object>();
+        cmbSituacao = new javax.swing.JComboBox<model.Ins_situacao>();
         btnGravar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jtfObservacao = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cmbInseminador = new javax.swing.JComboBox<Object>();
-        cmbVaca = new javax.swing.JComboBox<Object>();
+        cmbInseminador = new javax.swing.JComboBox<>();
+        cmbVaca = new javax.swing.JComboBox<>();
         btnNovoInseminador = new javax.swing.JButton();
         btnCadVaca = new javax.swing.JButton();
 
@@ -219,7 +220,7 @@ public class InseminacaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbSituacaoActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), cmbSituacao.getItemAt(0).toString() , jtfObservacao.getText(), cmbInseminador.getItemAt(0).toString(), cmbVaca.getItemAt(0).toString());
+        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), cmbSituacao.getItemAt(cmbSituacao.getSelectedIndex()).getCodigo(), jtfObservacao.getText(), cmbInseminador.getItemAt(cmbInseminador.getSelectedIndex()).getCodigo(), cmbVaca.getItemAt(cmbVaca.getSelectedIndex()).getBrinco());
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -261,9 +262,9 @@ public class InseminacaoView extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGravar;
     private javax.swing.JButton btnNovoInseminador;
-    private javax.swing.JComboBox<Object> cmbInseminador;
-    private javax.swing.JComboBox<Object> cmbSituacao;
-    private javax.swing.JComboBox<Object> cmbVaca;
+    private javax.swing.JComboBox<model.Inseminador> cmbInseminador;
+    private javax.swing.JComboBox<model.Ins_situacao> cmbSituacao;
+    private javax.swing.JComboBox<model.Vaca> cmbVaca;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

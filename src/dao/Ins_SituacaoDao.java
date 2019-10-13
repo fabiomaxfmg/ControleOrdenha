@@ -34,12 +34,12 @@ public class Ins_SituacaoDao {
         }
     }
 
-    public static boolean alterar(String codigo, String nome) {
+    public static boolean alterar(int codigo, String nome) {
         String sql = "UPDATE inssituacao SET nome = ? WHERE codigo = ?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, nome);
-            ps.setString(2, codigo);
+            ps.setInt(2, codigo);
             ps.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -48,11 +48,11 @@ public class Ins_SituacaoDao {
         }
     }
 
-    public static boolean excluir(String codigo) {
+    public static boolean excluir(int codigo) {
         String sql = "DELETE FROM inssituacao WHERE codigo = ?";
         try {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
-            ps.setString(1, codigo);
+            ps.setInt(1, codigo);
             ps.executeUpdate();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
@@ -81,17 +81,17 @@ public class Ins_SituacaoDao {
         }
     }
 
-        public static List<String[]> consultar() {
-        List<String[]> resultados = new ArrayList<>();
+        public static List<Ins_situacao> consultar() {
+        List<Ins_situacao> resultados = new ArrayList<>();
         String sql = "SELECT codigo, nome FROM inssituacao";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String[] linha = new String[2];
-                linha[0] = rs.getString("codigo");
-                linha[1] = rs.getString("nome");
+                Ins_situacao linha = new Ins_situacao();
+                linha.setCodigo(rs.getInt("codigo"));
+                linha.setNome(rs.getString("nome"));
                 resultados.add(linha);
             }
             return resultados;
@@ -103,23 +103,26 @@ public class Ins_SituacaoDao {
 
 
     
-    public static Map<String, String> consultar(String pk) {
-        Map<String, String> resultado = new HashMap<>();
+    public static Ins_situacao consultar(int pk) {
+        Ins_situacao resultado = new Ins_situacao();
         String sql = "SELECT codigo, nome FROM inssituacao WHERE codigo=?";
         PreparedStatement ps;
         try {
             ps = conexao.Conexao.getConexao().prepareStatement(sql);
-            ps.setString(1, pk);
+            ps.setInt(1, pk);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                resultado.put("codigo", rs.getString("codigo"));
-                resultado.put("nome", rs.getString("nome"));
+                resultado.setCodigo(rs.getInt("codigo"));
+                resultado.setNome(rs.getString("nome"));
             }
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(InseminadorDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+    public static void main(String[] args){
+        
     }
 
 }

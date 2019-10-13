@@ -145,7 +145,7 @@ public class ManutencaoRaca extends javax.swing.JDialog {
 
     }
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        boolean resultado = RacaDao.alterar(jtfCodigo.getText(), jtfDescricao.getText());
+        boolean resultado = RacaDao.alterar(Integer.parseInt(jtfCodigo.getText()), jtfDescricao.getText());
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
 
@@ -182,7 +182,7 @@ public class ManutencaoRaca extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        boolean resultado = RacaDao.excluir(jtfCodigo.getText());
+        boolean resultado = RacaDao.excluir(Integer.parseInt(jtfCodigo.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
 
