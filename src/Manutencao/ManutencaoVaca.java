@@ -1,8 +1,14 @@
 package Manutencao;
 
 import Listagem.ListagemVaca;
+import dao.RacaDao;
+import dao.TouroDao;
 import dao.VacaDao;
+import dao.Vaca_situacaoDao;
 import javax.swing.JOptionPane;
+import model.Raca;
+import model.Touro;
+import model.vaca_situacao;
 
 public class ManutencaoVaca extends javax.swing.JDialog {
 
@@ -11,12 +17,19 @@ public class ManutencaoVaca extends javax.swing.JDialog {
     public ManutencaoVaca(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        populateSit();
+        populateTour();
+        populateRaca();
     }
-
+    
+    
     public ManutencaoVaca(java.awt.Frame parent, boolean modal, ListagemVaca listagem) {
         super(parent, modal);
         initComponents();
-
+        jtfCodigoMae1.setText("");
+        populateTour();
+        populateSit();
+        populateRaca();
         this.listagem = listagem;
 
         btnAlterar.setEnabled(false);
@@ -55,10 +68,10 @@ public class ManutencaoVaca extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jtfCodigoMae1 = new javax.swing.JTextField();
-        jtfCodigoRaca1 = new javax.swing.JTextField();
-        jtfCodigoTouro1 = new javax.swing.JTextField();
         situacao = new javax.swing.JLabel();
-        jtfsit = new javax.swing.JTextField();
+        jcbSituacao = new javax.swing.JComboBox<>();
+        jcbTouro = new javax.swing.JComboBox<>();
+        jcbRaca = new javax.swing.JComboBox<>();
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jFrame1.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -152,12 +165,7 @@ public class ManutencaoVaca extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setText("Código Touro:");
 
-        jtfCodigoTouro1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfCodigoTouro1ActionPerformed(evt);
-            }
-        });
-
+        situacao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         situacao.setText("Codigo Situacao");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -170,52 +178,51 @@ public class ManutencaoVaca extends javax.swing.JDialog {
                         .addGap(230, 230, 230)
                         .addComponent(jLabel6))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(120, 120, 120)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfCodigoMae1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfDataNascimento1))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel7)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jtfNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addGap(13, 13, 13)
-                                            .addComponent(jtfCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfCodigoRaca1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(160, 160, 160)
-                            .addComponent(btnAdicionar1)
-                            .addGap(37, 37, 37)
-                            .addComponent(btnAlterar1)
-                            .addGap(47, 47, 47)
-                            .addComponent(btnExcluir1)
-                            .addGap(35, 35, 35)
-                            .addComponent(btnCancelar1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(situacao)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jtfsit, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel12)
+                            .addGap(120, 120, 120)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel10)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jtfCodigoTouro1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(jtfCodigoMae1))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel9)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jtfDataNascimento1))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jtfNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(13, 13, 13)
+                                        .addComponent(jtfCodigo1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel11)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(jcbRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel12)
+                                        .addComponent(situacao))
+                                    .addGap(29, 29, 29)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jcbTouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(277, 277, 277)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(160, 160, 160)
+                        .addComponent(btnAdicionar1)
+                        .addGap(37, 37, 37)
+                        .addComponent(btnAlterar1)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnExcluir1)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnCancelar1)))
                 .addContainerGap(167, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -235,29 +242,29 @@ public class ManutencaoVaca extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jtfDataNascimento1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfCodigoMae1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jtfCodigoRaca1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfCodigoTouro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(jcbTouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(situacao)
-                    .addComponent(jtfsit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionar1)
                     .addComponent(btnAlterar1)
                     .addComponent(btnExcluir1)
                     .addComponent(btnCancelar1))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -265,10 +272,6 @@ public class ManutencaoVaca extends javax.swing.JDialog {
 private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
 
     }
-    private void jtfCodigoTouro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodigoTouro1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfCodigoTouro1ActionPerformed
-
     private void btnAlterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterar1ActionPerformed
 /*       boolean resultado = VacaDao.alterar(jtfCodigo1.getText(), jtfNome1.getText(), jtfDataNascimento1.getText(), jtfCodigoMae1.getText(), jtfCodigoRaca1.getText(), jtfCodigoTouro1.getText());
         if (resultado) {
@@ -286,10 +289,11 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
 
     private void btnAdicionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionar1ActionPerformed
         boolean resultado;
-        if(jtfCodigoMae1.getText() == ""){
-            resultado = VacaDao.inserir(Integer.parseInt(jtfCodigo1.getText()), jtfNome1.getText(), jtfDataNascimento1.getText(),Integer.parseInt(jtfsit.getText()), Integer.parseInt(jtfCodigoRaca1.getText()), Integer.parseInt(jtfCodigoTouro1.getText()));
+        System.out.println("AA"+jtfCodigoMae1.getText());
+        if(jtfCodigoMae1.getText().equals("")){
+            resultado = VacaDao.inserir(Integer.parseInt(jtfCodigo1.getText()), jtfNome1.getText(), jtfDataNascimento1.getText(),jcbSituacao.getItemAt(jcbSituacao.getSelectedIndex()).getCodigo(), jcbRaca.getItemAt(jcbRaca.getSelectedIndex()).getCodigo(), jcbTouro.getItemAt(jcbTouro.getSelectedIndex()).getCodigo());
         }else{
-            resultado = VacaDao.inserir(Integer.parseInt(jtfCodigo1.getText()), jtfNome1.getText(), jtfDataNascimento1.getText(),Integer.parseInt(jtfsit.getText()),Integer.parseInt(jtfCodigoMae1.getText()) ,Integer.parseInt(jtfCodigoRaca1.getText()), Integer.parseInt(jtfCodigoTouro1.getText()));
+            resultado = VacaDao.inserir(Integer.parseInt(jtfCodigo1.getText()), jtfNome1.getText(), jtfDataNascimento1.getText(),jcbSituacao.getItemAt(jcbSituacao.getSelectedIndex()).getCodigo(),Integer.parseInt(jtfCodigoMae1.getText()) ,jcbRaca.getItemAt(jcbRaca.getSelectedIndex()).getCodigo(), jcbTouro.getItemAt(jcbTouro.getSelectedIndex()).getCodigo());
         }
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
@@ -307,13 +311,13 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
         jtfNome1.setText("");
         jtfDataNascimento1.setText("");
         jtfCodigoMae1.setText("");
-        jtfCodigoRaca1.setText("");
-        jtfCodigoTouro1.setText("");
+        //jtfCodigoRaca1.setText("");
+        //jtfCodigoTouro1.setText("");
 
         }                     
     
     private void btnExcluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluir1ActionPerformed
- /*       boolean resultado = VacaDao.excluir(jtfCodigo.getText());
+        boolean resultado = VacaDao.excluir(Integer.parseInt(jtfCodigo.getText()));
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
 
@@ -324,7 +328,7 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
-        */
+        
     }//GEN-LAST:event_btnExcluir1ActionPerformed
 
     private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
@@ -370,6 +374,21 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
     }
+    public void populateSit(){
+        for(vaca_situacao s : Vaca_situacaoDao.consultar()){
+            jcbSituacao.addItem(s);
+        }
+    }
+    public void populateTour(){
+        for(Touro s : TouroDao.consultar()){
+            jcbTouro.addItem(s);
+        }
+    }
+    public void populateRaca(){
+        for(Raca r : RacaDao.consultar()){
+            jcbRaca.addItem(r);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
@@ -393,16 +412,16 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JComboBox<model.Raca> jcbRaca;
+    private javax.swing.JComboBox<vaca_situacao> jcbSituacao;
+    private javax.swing.JComboBox<model.Touro> jcbTouro;
     private javax.swing.JTextField jtfCodigo;
     private javax.swing.JTextField jtfCodigo1;
     private javax.swing.JTextField jtfCodigoMae1;
-    private javax.swing.JTextField jtfCodigoRaca1;
-    private javax.swing.JTextField jtfCodigoTouro1;
     private javax.swing.JTextField jtfDataNascimento;
     private javax.swing.JTextField jtfDataNascimento1;
     private javax.swing.JTextField jtfNome;
     private javax.swing.JTextField jtfNome1;
-    private javax.swing.JTextField jtfsit;
     private javax.swing.JLabel situacao;
     // End of variables declaration//GEN-END:variables
 }

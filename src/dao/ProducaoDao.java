@@ -80,6 +80,7 @@ public class ProducaoDao {
                 Producao linha = new Producao();
                 linha.setCodigo(rs.getInt("codigo"));
                 linha.setData(rs.getDate("data"));
+                linha.setProducao_litros(rs.getInt("producao_litros"));
                 linha.setMediapervaca(rs.getDouble("mediapervaca"));
                 linha.setNr_ordenha_uteis(rs.getInt("nr_ordenha_uteis"));
                 resultados.add(linha);
@@ -101,6 +102,7 @@ public class ProducaoDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 resultado.setCodigo(rs.getInt("codigo"));
+                resultado.setProducao_litros(rs.getInt("producao_litros"));
                 resultado.setData(rs.getDate("data"));
                 resultado.setMediapervaca(rs.getDouble("mediapervaca"));
                 resultado.setNr_ordenha_uteis(rs.getInt("nr_ordenha_uteis"));

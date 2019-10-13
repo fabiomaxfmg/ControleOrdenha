@@ -65,7 +65,7 @@ public class TouroDao {
                 Touro linha = new Touro();
                 linha.setCod_raca(rs.getInt("cod_raca"));
                 linha.setCodigo(rs.getInt("codigo"));
-                linha.setNome("nome");
+                linha.setNome(rs.getString("nome"));
                 resultados.add(linha);
             }
             return resultados;

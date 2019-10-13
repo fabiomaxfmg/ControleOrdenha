@@ -29,7 +29,7 @@ public class ListagemProducaoView extends javax.swing.JDialog {
         
         List<Producao> resultados = ProducaoDao.consultar();
         for (Producao linha : resultados) {
-            String[] aa = {linha.getData().toString(),Integer.toString(linha.getCodigo())};
+            String[] aa = {linha.getData().toString(),Integer.toString(linha.getProducao_litros())};
             modelo.addRow(aa);
         }
         tabela.setModel(modelo);

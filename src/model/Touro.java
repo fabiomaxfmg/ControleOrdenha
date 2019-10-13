@@ -37,5 +37,10 @@ public class Touro {
     public void setCod_raca(int cod_raca) {
         this.cod_raca = cod_raca;
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
     
 }

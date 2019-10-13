@@ -71,7 +71,7 @@ public class ManutencaoP7rincipal extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setText("Cancelar");
+        jButton8.setText("Cadastro Situação");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
@@ -147,8 +147,9 @@ public class ManutencaoP7rincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
+        ManutencaoSituacao man = new ManutencaoSituacao();
+        man.setLocationRelativeTo(null);
+        man.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
