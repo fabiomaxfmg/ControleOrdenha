@@ -9,10 +9,10 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Producao;
 
-public class ListagemProducaoView extends javax.swing.JDialog {
+public class ListagemProducaoView extends javax.swing.JFrame {
 
     public ListagemProducaoView(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        //super(parent, modal);
         initComponents();
         
         atualizarTabela();
@@ -26,10 +26,11 @@ public class ListagemProducaoView extends javax.swing.JDialog {
        
         modelo.addColumn("Data");
         modelo.addColumn("Produção em litros");
+        modelo.addColumn("Média por ordenha útil");
         
         List<Producao> resultados = ProducaoDao.consultar();
         for (Producao linha : resultados) {
-            String[] aa = {linha.getData().toString(),Integer.toString(linha.getProducao_litros())};
+            String[] aa = {linha.getData().toString(),Integer.toString(linha.getProducao_litros()),Double.toString(linha.getMediapervaca())};
             modelo.addRow(aa);
         }
         tabela.setModel(modelo);
@@ -96,7 +97,7 @@ public class ListagemProducaoView extends javax.swing.JDialog {
                         .addComponent(btnAdicionar)
                         .addGap(55, 55, 55)
                         .addComponent(btnCancelar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,8 +117,14 @@ public class ListagemProducaoView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-/*        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), jtfObservacao.getText(), jtfCodigoInseminador.getText(), jtfCodigoVaca.getText());
+        ProducaoView pa = new ProducaoView(this, true);
+        pa.setLocationRelativeTo(null);
+        pa.setVisible(true);
+        
+        /*        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), jtfObservacao.getText(), jtfCodigoInseminador.getText(), jtfCodigoVaca.getText());
         if (resultado) {
+        
+        
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
             if (listagem != null) {
