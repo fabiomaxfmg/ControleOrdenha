@@ -5,11 +5,18 @@
  */
 package Views;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import Manutencao.ManutencaoP7rincipal;
 import javax.swing.JOptionPane;
 import javax.swing.text.html.FormView;
 import Views.ProducaoView;
 import Views.InseminacaoView;
+import conexao.Conexao;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -39,6 +46,7 @@ public class PrincipalView extends javax.swing.JFrame {
         btnRelProducao = new javax.swing.JButton();
         btnRelVacas = new javax.swing.JButton();
         btnCadastros = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,6 +89,13 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Testerela");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,13 +118,19 @@ public class PrincipalView extends javax.swing.JFrame {
                                     .addComponent(btnInseminacao, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnRelVacas, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(241, 241, 241)
+                .addComponent(jButton1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(11, 11, 11)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnProducao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInseminacao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -159,6 +180,12 @@ public class PrincipalView extends javax.swing.JFrame {
         form.setVisible(true);
     }//GEN-LAST:event_btnProducaoActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       Report view = new Report();
+       view.setLocationRelativeTo(null);
+       view.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,6 +231,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JButton btnProducao;
     private javax.swing.JButton btnRelProducao;
     private javax.swing.JButton btnRelVacas;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
