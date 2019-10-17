@@ -18,6 +18,7 @@ public class RacaDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, descricao);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -32,6 +33,7 @@ public class RacaDao {
             ps.setString(1, descricao);
             ps.setInt(2, codigo);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -45,6 +47,7 @@ public class RacaDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, codigo);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -65,6 +68,7 @@ public class RacaDao {
                 linha.setDescricao(rs.getString("descricao"));
                 resultados.add(linha);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(RacaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,6 +88,7 @@ public class RacaDao {
                 resultado.setCodigo(rs.getInt("codigo"));
                 resultado.setDescricao(rs.getString("descricao"));
             }
+            conexao.Conexao.fechaConexao();
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(RacaDao.class.getName()).log(Level.SEVERE, null, ex);

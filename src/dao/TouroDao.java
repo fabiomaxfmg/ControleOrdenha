@@ -18,6 +18,7 @@ public class TouroDao {
             ps.setString(1, nome);
             ps.setInt(2, cod_raca);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -34,6 +35,7 @@ public class TouroDao {
             ps.setInt(3, codigo);
 
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -47,6 +49,7 @@ public class TouroDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, codigo);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -68,6 +71,7 @@ public class TouroDao {
                 linha.setNome(rs.getString("nome"));
                 resultados.add(linha);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TouroDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,6 +92,7 @@ public class TouroDao {
                 resultado.setCodigo(rs.getInt("codigo"));
                 resultado.setNome(rs.getString("nome"));
             }
+            conexao.Conexao.fechaConexao();
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TouroDao.class.getName()).log(Level.SEVERE, null, ex);

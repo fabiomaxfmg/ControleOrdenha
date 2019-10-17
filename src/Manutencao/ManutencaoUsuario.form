@@ -47,7 +47,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jtfSenha" min="-2" pref="340" max="-2" attributes="0"/>
+                                  <Component id="jtfSenha" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -79,8 +79,8 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jtfSenha" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jtfSenha" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -119,8 +119,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jtfLogin">
     </Component>
-    <Component class="javax.swing.JTextField" name="jtfSenha">
-    </Component>
     <Component class="javax.swing.JButton" name="btnCancelar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -155,6 +153,8 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfNomeActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="jtfSenha">
     </Component>
   </SubComponents>
 </Form>

@@ -27,6 +27,7 @@ public class Ins_SituacaoDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setString(1, nome);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -41,6 +42,7 @@ public class Ins_SituacaoDao {
             ps.setString(1, nome);
             ps.setInt(2, codigo);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -54,6 +56,7 @@ public class Ins_SituacaoDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, codigo);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -74,6 +77,7 @@ public class Ins_SituacaoDao {
                 i.setNome(rs.getString("nome"));
                 resultados.add(i);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(InseminadorDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,6 +98,7 @@ public class Ins_SituacaoDao {
                 linha.setNome(rs.getString("nome"));
                 resultados.add(linha);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(InseminadorDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,6 +120,7 @@ public class Ins_SituacaoDao {
                 resultado.setCodigo(rs.getInt("codigo"));
                 resultado.setNome(rs.getString("nome"));
             }
+            conexao.Conexao.fechaConexao();
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(InseminadorDao.class.getName()).log(Level.SEVERE, null, ex);

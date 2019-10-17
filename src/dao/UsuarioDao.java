@@ -26,6 +26,8 @@ public class UsuarioDao {
             //ps = conexao.Conexao.getConexao().prepareStatement("CREATE USER "+ login +" WITH PASSWORD ?");
             Statement s = conexao.Conexao.getConexao().createStatement();
             s.executeUpdate("CREATE USER " + login+" WITH PASSWORD '"+ senha+"'");
+            s.executeUpdate("GRANT usuario TO "+ login.toLowerCase());
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -56,6 +58,7 @@ public class UsuarioDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(codigo));
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -79,6 +82,7 @@ public class UsuarioDao {
 
                 resultados.add(user);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,6 +104,8 @@ public class UsuarioDao {
                 resultado.setNome(rs.getString("nome"));
                 resultado.setSenha(rs.getString("senha"));
             }
+            
+            conexao.Conexao.fechaConexao();
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);

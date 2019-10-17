@@ -19,11 +19,11 @@ public class ManutencaoUsuario extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jtfLogin = new javax.swing.JTextField();
-        jtfSenha = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnCadastrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jtfNome = new javax.swing.JTextField();
+        jtfSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -86,7 +86,7 @@ public class ManutencaoUsuario extends javax.swing.JDialog {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jtfSenha))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -108,8 +108,8 @@ public class ManutencaoUsuario extends javax.swing.JDialog {
                     .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
@@ -181,6 +181,6 @@ public class ManutencaoUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jtfLogin;
     private javax.swing.JTextField jtfNome;
-    private javax.swing.JTextField jtfSenha;
+    private javax.swing.JPasswordField jtfSenha;
     // End of variables declaration//GEN-END:variables
 }

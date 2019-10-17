@@ -190,6 +190,7 @@ public class ProducaoView extends javax.swing.JDialog {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         boolean resultado;
+        
         if(jtfCodigo.getText().equals("")){
             resultado = ProducaoDao.inserir(jtfData.getText(), Integer.parseInt(jtfProducao.getText()), Integer.parseInt(jtfNrOrdenha.getText()));
         }else{
@@ -206,6 +207,7 @@ public class ProducaoView extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
+        System.out.println(conexao.Conexao.user);
     }//GEN-LAST:event_btnAdicionarActionPerformed
     private void limparCampos() {
         jtfData.setText("");

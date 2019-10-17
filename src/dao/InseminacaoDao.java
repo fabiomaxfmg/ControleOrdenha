@@ -33,7 +33,7 @@ public class InseminacaoDao {
             ps.setInt(4, cod_inseminador);
             ps.setInt(5, cod_vaca);
             ps.executeUpdate();
-
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             System.out.println(ex.getMessage());
@@ -59,7 +59,7 @@ public class InseminacaoDao {
             ps.setInt(5, cod_vaca);
             ps.setInt(6, codigo);
             ps.executeUpdate();
-
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             System.out.println(ex.getMessage());
@@ -73,6 +73,7 @@ public class InseminacaoDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, codigo);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -96,8 +97,11 @@ public class InseminacaoDao {
                 ins.setSituacao(rs.getInt("cod_situacao"));
                 ins.setData(rs.getDate("data"));
                 resultados.add(ins);
+                
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
+            
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(InseminacaoDao.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -143,6 +147,7 @@ public class InseminacaoDao {
                 resultado.setBrinco_vaca(rs.getInt("brinco_vaca"));
 
             }
+            conexao.Conexao.fechaConexao();
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(InseminacaoDao.class.getName()).log(Level.SEVERE, null, ex);

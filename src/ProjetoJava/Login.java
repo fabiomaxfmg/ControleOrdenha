@@ -5,6 +5,7 @@
  */
 package ProjetoJava;
 
+import Manutencao.ManutencaoUsuario;
 import Views.PrincipalView;
 import dao.UsuarioDao;
 import javax.swing.JOptionPane;
@@ -55,6 +56,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton2.setText("Cadastrar novo usuário");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,21 +108,26 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         //System.out.println(String.valueOf(jtfSenha.getPassword()));
-        for(Usuario a : UsuarioDao.consultar()){
-            System.out.println(a.getLogin());
-        }
+        
         try{
             if(UsuarioDao.consultarLogin(jtfLogin.getText()).getSenha().equals(String.valueOf(jtfSenha.getPassword()))){
                 PrincipalView form = new PrincipalView();
                 form.setLocationRelativeTo(null);
                 form.setVisible(true);
-                conexao.Conexao.user = jtfLogin.getText();
+                conexao.Conexao.user = jtfLogin.getText().toLowerCase();
+                System.out.println(conexao.Conexao.user);
                 conexao.Conexao.password = String.valueOf(jtfSenha.getPassword());
                 this.setVisible(false);
             }   
         }catch(NullPointerException ex){
             JOptionPane.showMessageDialog(null, "Usuário nãp encontrado!");
         }
+    }                                        
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        ManutencaoUsuario man = new ManutencaoUsuario(null, true);
+        man.setLocationRelativeTo(null);
+        man.setVisible(true);
     }                                        
 
     /**

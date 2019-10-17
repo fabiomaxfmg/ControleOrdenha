@@ -20,6 +20,7 @@ public class ProducaoDao {
 
     public static boolean inserir(String data,int producao_litros,int nr_ordenhas_uteis) {
         String sql = "INSERT INTO producao (data,producao_litros,nr_ordenha_uteis) VALUES (?,?,?)";
+        System.out.println(conexao.Conexao.password);
         try {
             String date1;      
             date1 = dfsql.format(df.parse(data));
@@ -29,6 +30,7 @@ public class ProducaoDao {
             ps.setInt(2,producao_litros);
             ps.setInt(3, nr_ordenhas_uteis);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             System.out.println(ex.getMessage());
@@ -49,6 +51,7 @@ public class ProducaoDao {
             ps.setInt(4, codigo);
 
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             System.out.println(ex.getMessage());
@@ -62,6 +65,7 @@ public class ProducaoDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, codigo);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -85,6 +89,7 @@ public class ProducaoDao {
                 linha.setNr_ordenha_uteis(rs.getInt("nr_ordenha_uteis"));
                 resultados.add(linha);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ProducaoDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,6 +112,8 @@ public class ProducaoDao {
                 resultado.setMediapervaca(rs.getDouble("mediapervaca"));
                 resultado.setNr_ordenha_uteis(rs.getInt("nr_ordenha_uteis"));
             }
+            
+            conexao.Conexao.fechaConexao();
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ProducaoDao.class.getName()).log(Level.SEVERE, null, ex);

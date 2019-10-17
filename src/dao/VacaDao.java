@@ -36,6 +36,7 @@ public class VacaDao {
             ps.setInt(6, cod_raca);
             ps.setInt(7, cod_touro);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         }catch(ClassNotFoundException | SQLException | ParseException ex){
             System.out.println(ex);
@@ -57,6 +58,7 @@ public class VacaDao {
             ps.setInt(5, cod_raca);
             ps.setInt(6, cod_touro);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         }catch(ClassNotFoundException | SQLException | ParseException ex){
             System.out.println(ex);
@@ -81,6 +83,7 @@ public class VacaDao {
             ps.setInt(6, cod_touro);
             ps.setInt(7, brinco);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             System.out.println(ex.getMessage());
@@ -101,6 +104,7 @@ public class VacaDao {
             ps.setInt(5, cod_touro);
             ps.setInt(6, brinco);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException | ParseException ex) {
             System.out.println(ex.getMessage());
@@ -114,6 +118,7 @@ public class VacaDao {
             PreparedStatement ps = conexao.Conexao.getConexao().prepareStatement(sql);
             ps.setInt(1, brinco);
             ps.executeUpdate();
+            conexao.Conexao.fechaConexao();
             return true;
         } catch (SQLException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
@@ -139,6 +144,7 @@ public class VacaDao {
                 linha.setData_nascimento(rs.getDate("data_nascimento"));
                 resultados.add(linha);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(VacaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -167,6 +173,7 @@ public class VacaDao {
                 
                 resultados.add(v);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(VacaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -187,6 +194,7 @@ public class VacaDao {
 
                 resultados.add(v);
             }
+            conexao.Conexao.fechaConexao();
             return resultados;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(VacaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,6 +219,7 @@ public class VacaDao {
                 resultado.setData_nascimento(rs.getDate("data_nascimento"));
                 resultado.setNome(rs.getString("nome"));
             }
+            conexao.Conexao.fechaConexao();
             return resultado;
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(VacaDao.class.getName()).log(Level.SEVERE, null, ex);
