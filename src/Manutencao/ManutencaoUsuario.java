@@ -2,6 +2,7 @@
 package Manutencao;
 
 import dao.UsuarioDao;
+import javax.swing.JOptionPane;
 
 public class ManutencaoUsuario extends javax.swing.JDialog {
 
@@ -129,7 +130,12 @@ public class ManutencaoUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_jtfNomeActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        UsuarioDao.inserir(jtfNome.getText(), jtfLogin.getText(), jtfSenha.getText());
+        boolean resultado = UsuarioDao.inserir(jtfNome.getText(), jtfLogin.getText(), jtfSenha.getText());
+        if(resultado){
+            JOptionPane.showMessageDialog(null, "Cadastrado");
+        }else{
+            JOptionPane.showMessageDialog(null, "Erro");
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     

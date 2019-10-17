@@ -163,9 +163,13 @@ public class PrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRelProducaoActionPerformed
 
     private void btnRelVacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelVacasActionPerformed
-        Report vacas = new Report();
-        vacas.setLocationRelativeTo(null);
-        vacas.setVisible(true);
+        if(conexao.Conexao.user.equals("postgres")){
+            Report vacas = new Report();
+            vacas.setLocationRelativeTo(null);
+            vacas.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Você não tem permissão para isso");
+        }
     }//GEN-LAST:event_btnRelVacasActionPerformed
 
     private void btnCadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrosActionPerformed

@@ -32,9 +32,11 @@ public class Report extends javax.swing.JFrame {
 
     /**
      * Creates new form Report
+     * 
      */
-        Date data;
-        Date data2;
+        int mouse = 0;
+        Connection conn = null;
+
     public Report() {
         initComponents();
 
@@ -57,32 +59,7 @@ public class Report extends javax.swing.JFrame {
         tabela.setModel(da);
         /*/
     }
-    public void showReport(){
-        
-        Connection conn = null;
-        HashMap ha = new HashMap();
-        ha.put("dataMin",data);
-        ha.put("dataMax", data2);
-        try{
-            conn=Conexao.getConexao();
-            
-        }catch(SQLException | ClassNotFoundException ex){
-            System.out.println("deu ruim");
-        }
-        String src = "NANA.jasper"; // o da producao do mes/ano depende do que a véia botar
-        
-        JasperPrint jasperPrint = null;
-        try{
-            jasperPrint = JasperFillManager.fillReport(src,ha,conn);
-            //jasperPrint = JasperFillManager.fillrep
-        }
-        catch(JRException ex){
-            System.out.println("n deu dnv");
-        }
-        
-        JasperViewer view = new JasperViewer(jasperPrint, false);
-        view.setVisible(true);
-    }      
+   
     
 
     /**
@@ -94,14 +71,40 @@ public class Report extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        RelatorioVacasNormais = new javax.swing.JButton();
+        RelatorioVacasPrenhas = new javax.swing.JButton();
+        RelatorioProducao = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Imprimir\\Salvar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        RelatorioVacasNormais.setText("Relatório Vacas Normais");
+        RelatorioVacasNormais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                RelatorioVacasNormaisActionPerformed(evt);
+            }
+        });
+
+        RelatorioVacasPrenhas.setText("Relatório Vacas Prenhas");
+        RelatorioVacasPrenhas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RelatorioVacasPrenhasActionPerformed(evt);
+            }
+        });
+
+        RelatorioProducao.setText("Relatório de Produção");
+        RelatorioProducao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RelatorioProducaoActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Relatórios");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
             }
         });
 
@@ -110,36 +113,108 @@ public class Report extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton1)
-                .addContainerGap(275, Short.MAX_VALUE))
+                .addGap(124, 124, 124)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(RelatorioProducao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RelatorioVacasPrenhas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RelatorioVacasNormais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(173, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(104, 104, 104))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(RelatorioVacasNormais, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RelatorioVacasPrenhas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RelatorioProducao, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat dfsql = new SimpleDateFormat("yyyy-MM-dd");
-        try{
-        String date1;
-            date1 = dfsql.format(df.parse("1/1/0001"));
-            
-            data = Date.valueOf(date1);
-            date1 = dfsql.format(df.parse("1/1/3111"));
-            data2 = Date.valueOf(date1);
-        }catch(ParseException ex){
-            return;
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        mouse++;
+        if(mouse == 3){
+            try{
+                conn=Conexao.getConexao();
+
+            }catch(SQLException | ClassNotFoundException ex){
+                System.out.println("deu ruim");
+            }
+            String src = "Relatório de vacas estranhas.jasper"; // o da producao do mes/ano depende do que a véia botar
+
+            JasperPrint jasperPrint = null;
+             try {
+                 jasperPrint = JasperFillManager.fillReport(src,null,conn);
+                 //jasperPrint = JasperFillManager.fillrep
+             } catch (JRException ex) {
+                 Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+             }
+
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setVisible(true);
+                conexao.Conexao.fechaConexao();
         }
-        showReport();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void RelatorioVacasNormaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioVacasNormaisActionPerformed
+        // TODO add your handling code here:
+        try{
+                conn=Conexao.getConexao();
+
+            }catch(SQLException | ClassNotFoundException ex){
+                System.out.println("deu ruim");
+            }
+            String src = "Relatorio de vacas normais.jasper"; // o da producao do mes/ano depende do que a véia botar
+
+            JasperPrint jasperPrint = null;
+             try {
+                 jasperPrint = JasperFillManager.fillReport(src,null,conn);
+                 //jasperPrint = JasperFillManager.fillrep
+             } catch (JRException ex) {
+                 Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+             }
+
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setVisible(true);
+            conexao.Conexao.fechaConexao();
+    }//GEN-LAST:event_RelatorioVacasNormaisActionPerformed
+
+    private void RelatorioVacasPrenhasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioVacasPrenhasActionPerformed
+        // TODO add your handling code here:
+        try{
+                conn=Conexao.getConexao();
+
+            }catch(SQLException | ClassNotFoundException ex){
+                System.out.println("deu ruim");
+            }
+            String src = "Relatorio de vacas prenhas.jasper"; // o da producao do mes/ano depende do que a véia botar
+
+            JasperPrint jasperPrint = null;
+             try {
+                 jasperPrint = JasperFillManager.fillReport(src,null,conn);
+                 //jasperPrint = JasperFillManager.fillrep
+             } catch (JRException ex) {
+                 Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
+             }
+
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setVisible(true);
+            conexao.Conexao.fechaConexao();
+    }//GEN-LAST:event_RelatorioVacasPrenhasActionPerformed
+
+    private void RelatorioProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RelatorioProducaoActionPerformed
+        SelecionarDataView form = new SelecionarDataView();
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
+    }//GEN-LAST:event_RelatorioProducaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,6 +252,9 @@ public class Report extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton RelatorioProducao;
+    private javax.swing.JButton RelatorioVacasNormais;
+    private javax.swing.JButton RelatorioVacasPrenhas;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

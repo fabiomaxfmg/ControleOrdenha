@@ -24,29 +24,68 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="275" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="RelatorioProducao" max="32767" attributes="0"/>
+                  <Component id="RelatorioVacasPrenhas" max="32767" attributes="0"/>
+                  <Component id="RelatorioVacasNormais" max="32767" attributes="0"/>
+                  <Component id="jLabel1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace pref="129" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="173" max="32767" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="RelatorioVacasNormais" min="-2" pref="44" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="RelatorioVacasPrenhas" min="-2" pref="40" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="RelatorioProducao" min="-2" pref="39" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="RelatorioVacasNormais">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Imprimir\u005cSalvar" containsInvalidXMLChars="true"/>
+        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Vacas Normais"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RelatorioVacasNormaisActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="RelatorioVacasPrenhas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio Vacas Prenhas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RelatorioVacasPrenhasActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="RelatorioProducao">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Relat&#xf3;rio de Produ&#xe7;&#xe3;o"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RelatorioProducaoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="18" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Relat&#xf3;rios"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseClicked"/>
       </Events>
     </Component>
   </SubComponents>
