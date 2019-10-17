@@ -1,0 +1,1190 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 11.3
+-- Dumped by pg_dump version 11.2
+
+-- Started on 2019-10-17 14:23:45
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 612 (class 1247 OID 41476)
+-- Name: dbrinco; Type: DOMAIN; Schema: public; Owner: postgres
+--
+
+CREATE DOMAIN public.dbrinco AS integer
+	CONSTRAINT dbrinco_check CHECK ((VALUE > 0));
+
+
+ALTER DOMAIN public.dbrinco OWNER TO postgres;
+
+--
+-- TOC entry 616 (class 1247 OID 41479)
+-- Name: doperacao; Type: DOMAIN; Schema: public; Owner: postgres
+--
+
+CREATE DOMAIN public.doperacao AS character varying(10) DEFAULT NULL::character varying
+	CONSTRAINT doperacao_check CHECK (((VALUE)::text = ANY (ARRAY[('LEITE'::character varying)::text, ('INSEMINAR'::character varying)::text])));
+
+
+ALTER DOMAIN public.doperacao OWNER TO postgres;
+
+--
+-- TOC entry 620 (class 1247 OID 41482)
+-- Name: dproducaodata; Type: DOMAIN; Schema: public; Owner: postgres
+--
+
+CREATE DOMAIN public.dproducaodata AS date DEFAULT '2019-10-01'::date;
+
+
+ALTER DOMAIN public.dproducaodata OWNER TO postgres;
+
+--
+-- TOC entry 623 (class 1247 OID 41484)
+-- Name: situacao; Type: DOMAIN; Schema: public; Owner: postgres
+--
+
+CREATE DOMAIN public.situacao AS integer DEFAULT 0
+	CONSTRAINT situacao_check CHECK (((VALUE >= 0) AND (VALUE <= 3)));
+
+
+ALTER DOMAIN public.situacao OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1255 OID 41486)
+-- Name: atualizar_prod_media(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.atualizar_prod_media() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+	BEGIN
+		NEW.mediapervaca := NEW.producao_litros / NEW.nr_ordenha_uteis;
+		RETURN NEW;
+	END;
+	$$;
+
+
+ALTER FUNCTION public.atualizar_prod_media() OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1255 OID 41487)
+-- Name: audit_inseminar(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.audit_inseminar() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+    BEGIN
+        -- Registrar quem fez o "leite"
+        INSERT INTO auditoria(data, operacao, usuario)VALUES('now','INSEMINAR',CURRENT_USER);
+   		RETURN NEW;
+   END;
+$$;
+
+
+ALTER FUNCTION public.audit_inseminar() OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1255 OID 41488)
+-- Name: audit_leite(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.audit_leite() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+    BEGIN
+        -- Registrar quem fez o leite
+        INSERT INTO auditoria(data, operacao, usuario)VALUES('now','LEITE',CURRENT_USER);
+    	RETURN NEW;
+	END;
+$$;
+
+
+ALTER FUNCTION public.audit_leite() OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1255 OID 41489)
+-- Name: inserir_prod_media(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.inserir_prod_media() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+	BEGIN
+		NEW.mediapervaca := NEW.producao_litros / NEW.nr_ordenha_uteis;
+		RETURN NEW;
+	END;
+	$$;
+
+
+ALTER FUNCTION public.inserir_prod_media() OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 196 (class 1259 OID 41490)
+-- Name: auditoria; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auditoria (
+    data public.dproducaodata NOT NULL,
+    operacao public.doperacao,
+    usuario name,
+    codigo integer NOT NULL
+);
+
+
+ALTER TABLE public.auditoria OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 41621)
+-- Name: auditoria_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auditoria_codigo_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auditoria_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2950 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: auditoria_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auditoria_codigo_seq OWNED BY public.auditoria.codigo;
+
+
+--
+-- TOC entry 197 (class 1259 OID 41496)
+-- Name: inseminacao; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inseminacao (
+    codigo integer NOT NULL,
+    data date,
+    cod_situacao public.situacao,
+    observacao character varying(50),
+    brinco_vaca public.dbrinco,
+    cod_inseminador integer
+);
+
+
+ALTER TABLE public.inseminacao OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 41499)
+-- Name: inseminacao_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inseminacao_codigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.inseminacao_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2953 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: inseminacao_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inseminacao_codigo_seq OWNED BY public.inseminacao.codigo;
+
+
+--
+-- TOC entry 199 (class 1259 OID 41501)
+-- Name: inseminador; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inseminador (
+    codigo integer NOT NULL,
+    nome character varying(30)
+);
+
+
+ALTER TABLE public.inseminador OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 41504)
+-- Name: inseminador_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inseminador_codigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.inseminador_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2956 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: inseminador_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inseminador_codigo_seq OWNED BY public.inseminador.codigo;
+
+
+--
+-- TOC entry 201 (class 1259 OID 41506)
+-- Name: inssituacao; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inssituacao (
+    codigo integer NOT NULL,
+    nome character varying(30)
+);
+
+
+ALTER TABLE public.inssituacao OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 41509)
+-- Name: inssituacao_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inssituacao_codigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.inssituacao_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2959 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: inssituacao_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inssituacao_codigo_seq OWNED BY public.inssituacao.codigo;
+
+
+--
+-- TOC entry 203 (class 1259 OID 41511)
+-- Name: producao; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.producao (
+    data public.dproducaodata NOT NULL,
+    producao_litros integer,
+    codigo integer NOT NULL,
+    mediapervaca double precision,
+    nr_ordenha_uteis integer
+);
+
+
+ALTER TABLE public.producao OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 41613)
+-- Name: producao_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.producao_codigo_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.producao_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2962 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: producao_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.producao_codigo_seq OWNED BY public.producao.codigo;
+
+
+--
+-- TOC entry 204 (class 1259 OID 41514)
+-- Name: raca; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.raca (
+    codigo integer NOT NULL,
+    descricao character varying(100)
+);
+
+
+ALTER TABLE public.raca OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 41517)
+-- Name: raca_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.raca_codigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.raca_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2965 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: raca_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.raca_codigo_seq OWNED BY public.raca.codigo;
+
+
+--
+-- TOC entry 206 (class 1259 OID 41519)
+-- Name: touro; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.touro (
+    codigo integer NOT NULL,
+    nome character varying(30),
+    cod_raca integer
+);
+
+
+ALTER TABLE public.touro OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 41522)
+-- Name: touro_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.touro_codigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.touro_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2968 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: touro_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.touro_codigo_seq OWNED BY public.touro.codigo;
+
+
+--
+-- TOC entry 208 (class 1259 OID 41524)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuario (
+    codigo integer NOT NULL,
+    nome character varying(40),
+    login character varying(30),
+    senha character varying(30)
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 41527)
+-- Name: usuario_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuario_codigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuario_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2971 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: usuario_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuario_codigo_seq OWNED BY public.usuario.codigo;
+
+
+--
+-- TOC entry 210 (class 1259 OID 41529)
+-- Name: vaca; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vaca (
+    brinco public.dbrinco NOT NULL,
+    nome character varying(40) DEFAULT 'Jairo'::character varying,
+    data_nascimento date,
+    cod_situacao integer NOT NULL,
+    brinco_mae public.dbrinco,
+    cod_raca integer NOT NULL,
+    cod_touro integer
+);
+
+
+ALTER TABLE public.vaca OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 41533)
+-- Name: vacasituacao; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vacasituacao (
+    codigo integer NOT NULL,
+    nome character varying(30)
+);
+
+
+ALTER TABLE public.vacasituacao OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 41536)
+-- Name: vacasituacao_codigo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vacasituacao_codigo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.vacasituacao_codigo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2975 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: vacasituacao_codigo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vacasituacao_codigo_seq OWNED BY public.vacasituacao.codigo;
+
+
+--
+-- TOC entry 213 (class 1259 OID 41538)
+-- Name: vusuarios; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW public.vusuarios AS
+ SELECT usuario.nome,
+    usuario.login
+   FROM public.usuario;
+
+
+ALTER TABLE public.vusuarios OWNER TO postgres;
+
+--
+-- TOC entry 2761 (class 2604 OID 41623)
+-- Name: auditoria codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auditoria ALTER COLUMN codigo SET DEFAULT nextval('public.auditoria_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2762 (class 2604 OID 41542)
+-- Name: inseminacao codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inseminacao ALTER COLUMN codigo SET DEFAULT nextval('public.inseminacao_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2763 (class 2604 OID 41543)
+-- Name: inseminador codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inseminador ALTER COLUMN codigo SET DEFAULT nextval('public.inseminador_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2764 (class 2604 OID 41544)
+-- Name: inssituacao codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inssituacao ALTER COLUMN codigo SET DEFAULT nextval('public.inssituacao_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2765 (class 2604 OID 41615)
+-- Name: producao codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.producao ALTER COLUMN codigo SET DEFAULT nextval('public.producao_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2766 (class 2604 OID 41545)
+-- Name: raca codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.raca ALTER COLUMN codigo SET DEFAULT nextval('public.raca_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2767 (class 2604 OID 41546)
+-- Name: touro codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.touro ALTER COLUMN codigo SET DEFAULT nextval('public.touro_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2768 (class 2604 OID 41547)
+-- Name: usuario codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario ALTER COLUMN codigo SET DEFAULT nextval('public.usuario_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2770 (class 2604 OID 41548)
+-- Name: vacasituacao codigo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vacasituacao ALTER COLUMN codigo SET DEFAULT nextval('public.vacasituacao_codigo_seq'::regclass);
+
+
+--
+-- TOC entry 2925 (class 0 OID 41490)
+-- Dependencies: 196
+-- Data for Name: auditoria; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.auditoria (data, operacao, usuario, codigo) FROM stdin;
+2019-10-17	LEITE	jofrei	24
+\.
+
+
+--
+-- TOC entry 2926 (class 0 OID 41496)
+-- Dependencies: 197
+-- Data for Name: inseminacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.inseminacao (codigo, data, cod_situacao, observacao, brinco_vaca, cod_inseminador) FROM stdin;
+4	2010-10-10	2	o tentaculo foi estranho	12	2
+3	2069-04-20	1	despite the number, it was quite normal	12	1
+5	1910-10-10	1	tirando o bode deu show	124	2
+\.
+
+
+--
+-- TOC entry 2928 (class 0 OID 41501)
+-- Dependencies: 199
+-- Data for Name: inseminador; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.inseminador (codigo, nome) FROM stdin;
+2	Biroliro
+3	Jair Messias Guareschi
+1	Odahviing
+4	Sheogorath
+\.
+
+
+--
+-- TOC entry 2930 (class 0 OID 41506)
+-- Dependencies: 201
+-- Data for Name: inssituacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.inssituacao (codigo, nome) FROM stdin;
+1	nasceu um bode
+2	Espera... Isso é um tentáculo?
+3	Oh puxa vida...Nasceu Cthulhu!
+5	perdition has run amok
+\.
+
+
+--
+-- TOC entry 2932 (class 0 OID 41511)
+-- Dependencies: 203
+-- Data for Name: producao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.producao (data, producao_litros, codigo, mediapervaca, nr_ordenha_uteis) FROM stdin;
+0012-01-01	111	20	111	1
+\.
+
+
+--
+-- TOC entry 2933 (class 0 OID 41514)
+-- Dependencies: 204
+-- Data for Name: raca; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.raca (codigo, descricao) FROM stdin;
+1	Highlander
+3	Juan Ramirez
+\.
+
+
+--
+-- TOC entry 2935 (class 0 OID 41519)
+-- Dependencies: 206
+-- Data for Name: touro; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.touro (codigo, nome, cod_raca) FROM stdin;
+2	Pao de batata	1
+4	Boromir	1
+5	Aragorn	1
+6	Faramir, a man of quality	1
+3	Durin	1
+7	Legolas	1
+\.
+
+
+--
+-- TOC entry 2937 (class 0 OID 41524)
+-- Dependencies: 208
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuario (codigo, nome, login, senha) FROM stdin;
+8	Jonas	Raaaaiz	asas|
+9	Joseph Joestar	Lestaf	Hermitpurple
+10	121	aaa	senha123
+11	aaa	postgres	POSTGRES
+12	123	123	123
+13	1235	1234	1234
+14	1235	1234	12345
+15	1235	123456	12345
+16	123	Jofrei	123
+\.
+
+
+--
+-- TOC entry 2939 (class 0 OID 41529)
+-- Dependencies: 210
+-- Data for Name: vaca; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.vaca (brinco, nome, data_nascimento, cod_situacao, brinco_mae, cod_raca, cod_touro) FROM stdin;
+12	Rohirrim	1192-12-10	3	\N	1	2
+121213	Azura	1010-10-10	3	\N	1	7
+1213333	Kynareth	2003-06-09	5	\N	1	7
+124	Janaina	2192-12-10	8	\N	1	2
+\.
+
+
+--
+-- TOC entry 2940 (class 0 OID 41533)
+-- Dependencies: 211
+-- Data for Name: vacasituacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.vacasituacao (codigo, nome) FROM stdin;
+3	Felizassa
+5	Fighting for Gondor
+6	perdition has run amok
+7	Prenha
+8	Normal
+\.
+
+
+--
+-- TOC entry 2978 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: auditoria_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auditoria_codigo_seq', 24, true);
+
+
+--
+-- TOC entry 2979 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: inseminacao_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inseminacao_codigo_seq', 5, true);
+
+
+--
+-- TOC entry 2980 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: inseminador_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inseminador_codigo_seq', 4, true);
+
+
+--
+-- TOC entry 2981 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: inssituacao_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inssituacao_codigo_seq', 5, true);
+
+
+--
+-- TOC entry 2982 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: producao_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.producao_codigo_seq', 20, true);
+
+
+--
+-- TOC entry 2983 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: raca_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.raca_codigo_seq', 3, true);
+
+
+--
+-- TOC entry 2984 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: touro_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.touro_codigo_seq', 7, true);
+
+
+--
+-- TOC entry 2985 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: usuario_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuario_codigo_seq', 16, true);
+
+
+--
+-- TOC entry 2986 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: vacasituacao_codigo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vacasituacao_codigo_seq', 8, true);
+
+
+--
+-- TOC entry 2772 (class 2606 OID 41631)
+-- Name: auditoria pk_auditoria; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auditoria
+    ADD CONSTRAINT pk_auditoria PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2774 (class 2606 OID 41552)
+-- Name: inseminacao pk_inseminacao; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inseminacao
+    ADD CONSTRAINT pk_inseminacao PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2776 (class 2606 OID 41554)
+-- Name: inseminador pk_inseminador; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inseminador
+    ADD CONSTRAINT pk_inseminador PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2778 (class 2606 OID 41556)
+-- Name: inssituacao pk_inssituacao; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inssituacao
+    ADD CONSTRAINT pk_inssituacao PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2780 (class 2606 OID 41620)
+-- Name: producao pk_producao; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.producao
+    ADD CONSTRAINT pk_producao PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2782 (class 2606 OID 41560)
+-- Name: raca pk_raca; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.raca
+    ADD CONSTRAINT pk_raca PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2784 (class 2606 OID 41562)
+-- Name: touro pk_touro; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.touro
+    ADD CONSTRAINT pk_touro PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2786 (class 2606 OID 41564)
+-- Name: usuario pk_usuario; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuario
+    ADD CONSTRAINT pk_usuario PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2788 (class 2606 OID 41566)
+-- Name: vaca pk_vaca; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vaca
+    ADD CONSTRAINT pk_vaca PRIMARY KEY (brinco);
+
+
+--
+-- TOC entry 2790 (class 2606 OID 41568)
+-- Name: vacasituacao pk_vacasituacao; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vacasituacao
+    ADD CONSTRAINT pk_vacasituacao PRIMARY KEY (codigo);
+
+
+--
+-- TOC entry 2800 (class 2620 OID 41569)
+-- Name: producao atualizar_prod_media; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER atualizar_prod_media AFTER UPDATE ON public.producao FOR EACH ROW EXECUTE PROCEDURE public.atualizar_prod_media();
+
+
+--
+-- TOC entry 2799 (class 2620 OID 41570)
+-- Name: inseminacao audit_inseminar; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER audit_inseminar AFTER INSERT OR UPDATE ON public.inseminacao FOR EACH ROW EXECUTE PROCEDURE public.audit_inseminar();
+
+
+--
+-- TOC entry 2801 (class 2620 OID 41571)
+-- Name: producao audit_leite; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER audit_leite AFTER INSERT OR UPDATE ON public.producao FOR EACH ROW EXECUTE PROCEDURE public.audit_leite();
+
+
+--
+-- TOC entry 2802 (class 2620 OID 41572)
+-- Name: producao inserir_prod_media; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER inserir_prod_media BEFORE INSERT ON public.producao FOR EACH ROW EXECUTE PROCEDURE public.inserir_prod_media();
+
+
+--
+-- TOC entry 2791 (class 2606 OID 41573)
+-- Name: inseminacao fk_ins_situacao; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inseminacao
+    ADD CONSTRAINT fk_ins_situacao FOREIGN KEY (cod_situacao) REFERENCES public.inssituacao(codigo);
+
+
+--
+-- TOC entry 2792 (class 2606 OID 41578)
+-- Name: inseminacao fk_inseminacao_inseminador; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inseminacao
+    ADD CONSTRAINT fk_inseminacao_inseminador FOREIGN KEY (cod_inseminador) REFERENCES public.inseminador(codigo);
+
+
+--
+-- TOC entry 2793 (class 2606 OID 41583)
+-- Name: inseminacao fk_inseminacao_vaca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inseminacao
+    ADD CONSTRAINT fk_inseminacao_vaca FOREIGN KEY (brinco_vaca) REFERENCES public.vaca(brinco);
+
+
+--
+-- TOC entry 2795 (class 2606 OID 41588)
+-- Name: vaca fk_mae_vaca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vaca
+    ADD CONSTRAINT fk_mae_vaca FOREIGN KEY (brinco_mae) REFERENCES public.vaca(brinco);
+
+
+--
+-- TOC entry 2796 (class 2606 OID 41593)
+-- Name: vaca fk_situacao; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vaca
+    ADD CONSTRAINT fk_situacao FOREIGN KEY (cod_situacao) REFERENCES public.vacasituacao(codigo);
+
+
+--
+-- TOC entry 2794 (class 2606 OID 41598)
+-- Name: touro fk_tour_raca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.touro
+    ADD CONSTRAINT fk_tour_raca FOREIGN KEY (cod_raca) REFERENCES public.raca(codigo);
+
+
+--
+-- TOC entry 2797 (class 2606 OID 41603)
+-- Name: vaca fk_vaca_raca; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vaca
+    ADD CONSTRAINT fk_vaca_raca FOREIGN KEY (cod_raca) REFERENCES public.raca(codigo);
+
+
+--
+-- TOC entry 2798 (class 2606 OID 41608)
+-- Name: vaca fk_vaca_touro; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vaca
+    ADD CONSTRAINT fk_vaca_touro FOREIGN KEY (cod_touro) REFERENCES public.touro(codigo);
+
+
+--
+-- TOC entry 2949 (class 0 OID 0)
+-- Dependencies: 196
+-- Name: TABLE auditoria; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.auditoria TO lestaf;
+GRANT ALL ON TABLE public.auditoria TO usuario;
+
+
+--
+-- TOC entry 2951 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: SEQUENCE auditoria_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.auditoria_codigo_seq TO lestaf;
+GRANT ALL ON SEQUENCE public.auditoria_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2952 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: TABLE inseminacao; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.inseminacao TO usuario;
+
+
+--
+-- TOC entry 2954 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: SEQUENCE inseminacao_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.inseminacao_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2955 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: TABLE inseminador; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.inseminador TO usuario;
+
+
+--
+-- TOC entry 2957 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: SEQUENCE inseminador_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.inseminador_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2958 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: TABLE inssituacao; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.inssituacao TO usuario;
+
+
+--
+-- TOC entry 2960 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: SEQUENCE inssituacao_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.inssituacao_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2961 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: TABLE producao; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT INSERT ON TABLE public.producao TO lestaf;
+GRANT ALL ON TABLE public.producao TO usuario;
+
+
+--
+-- TOC entry 2963 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: SEQUENCE producao_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.producao_codigo_seq TO lestaf;
+GRANT ALL ON SEQUENCE public.producao_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2964 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: TABLE raca; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.raca TO usuario;
+
+
+--
+-- TOC entry 2966 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: SEQUENCE raca_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.raca_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2967 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: TABLE touro; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.touro TO usuario;
+
+
+--
+-- TOC entry 2969 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: SEQUENCE touro_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.touro_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2970 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: TABLE usuario; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.usuario TO usuario;
+
+
+--
+-- TOC entry 2972 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: SEQUENCE usuario_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.usuario_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2973 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: TABLE vaca; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.vaca TO usuario;
+
+
+--
+-- TOC entry 2974 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: TABLE vacasituacao; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.vacasituacao TO usuario;
+
+
+--
+-- TOC entry 2976 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: SEQUENCE vacasituacao_codigo_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.vacasituacao_codigo_seq TO usuario;
+
+
+--
+-- TOC entry 2977 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: TABLE vusuarios; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.vusuarios TO usuario;
+
+
+-- Completed on 2019-10-17 14:23:46
+
+--
+-- PostgreSQL database dump complete
+--
+
