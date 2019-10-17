@@ -6,11 +6,11 @@ import dao.Vaca_situacaoDao;
 import javax.swing.JOptionPane;
 import model.vaca_situacao;
 
-public class ManutencaoInseminacao extends javax.swing.JDialog {
+public class UnusedInseminacaoMan extends javax.swing.JDialog {
 
     private ListagemInseminacao listagem;
   
-    public ManutencaoInseminacao(java.awt.Frame parent, boolean modal) {
+    public UnusedInseminacaoMan(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         for(vaca_situacao v : Vaca_situacaoDao.consultar()){
@@ -19,7 +19,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
         }
     }
 
-    public ManutencaoInseminacao(java.awt.Frame parent, boolean modal, ListagemInseminacao listagem) {
+    public UnusedInseminacaoMan(java.awt.Frame parent, boolean modal, ListagemInseminacao listagem) {
         super(parent, modal);
         initComponents();
 
@@ -54,6 +54,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jtfCodigoVaca = new javax.swing.JTextField();
         ComboSituacao = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(579, 426));
 
@@ -117,6 +118,8 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
             }
         });
 
+        jLabel8.setText("(Vazio para Cadastro]");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,37 +136,40 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ComboSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnAdicionar)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnAlterar)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnExcluir)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnCancelar))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfCodigoVaca))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jtfData)
-                                            .addComponent(jtfCodigo)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jtfCodigoInseminador)))))))
-                .addContainerGap(89, Short.MAX_VALUE))
+                                        .addComponent(btnAdicionar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAlterar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnExcluir)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnCancelar))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel7)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jtfCodigoVaca))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel2)
+                                                .addComponent(jLabel3))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jtfData)
+                                                .addComponent(jtfCodigo)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jtfObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jtfCodigoInseminador))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +179,8 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
                         .addGap(75, 75, 75)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -225,7 +232,12 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        boolean resultado = InseminacaoDao.inserir(jtfData.getText(),((vaca_situacao)ComboSituacao.getSelectedItem()).getCodigo(), jtfObservacao.getText(), Integer.parseInt(jtfCodigoInseminador.getText()), Integer.parseInt(jtfCodigoVaca.getText()));
+        boolean resultado;
+        if(jtfCodigo.getText().equals("")){
+            resultado = InseminacaoDao.inserir(jtfData.getText(),((vaca_situacao)ComboSituacao.getSelectedItem()).getCodigo(), jtfObservacao.getText(), Integer.parseInt(jtfCodigoInseminador.getText()), Integer.parseInt(jtfCodigoVaca.getText()));
+        }else{
+            resultado = InseminacaoDao.alterar(Integer.parseInt(jtfCodigo.getText()), jtfData.getText(),((vaca_situacao)ComboSituacao.getSelectedItem()).getCodigo() ,jtfObservacao.getText(), Integer.parseInt(jtfCodigoInseminador.getText()), Integer.parseInt(jtfCodigoVaca.getText()));
+        }
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -285,6 +297,7 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jtfCodigo;
     private javax.swing.JTextField jtfCodigoInseminador;
     private javax.swing.JTextField jtfCodigoVaca;

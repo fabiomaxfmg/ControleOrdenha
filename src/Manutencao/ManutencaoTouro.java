@@ -19,7 +19,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
 
         this.listagem = listagem;
 
-        btnAlterar.setEnabled(false);
+        //btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
     }
 
@@ -33,12 +33,12 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jtfCodigo = new javax.swing.JTextField();
         jtfNome = new javax.swing.JTextField();
-        btnAlterar = new javax.swing.JButton();
         btnAdicionar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jtfCodigoRaca = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,8 +59,6 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jLabel3.setText("Número ou Nome:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 207, -1, -1));
 
-        jtfCodigo.setEditable(false);
-        jtfCodigo.setEnabled(false);
         jtfCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfCodigoActionPerformed(evt);
@@ -69,15 +67,6 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jPanel1.add(jtfCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 144, 339, -1));
         jPanel1.add(jtfNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(253, 209, 250, -1));
 
-        btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnAlterar.setText("Alterar");
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 300, -1, -1));
-
         btnAdicionar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdicionar.setText("Adicionar");
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -85,7 +74,7 @@ public class ManutencaoTouro extends javax.swing.JDialog {
                 btnAdicionarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
+        jPanel1.add(btnAdicionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, -1, -1));
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExcluir.setText("Excluir");
@@ -109,6 +98,9 @@ public class ManutencaoTouro extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Código Raça:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, -1, -1));
+
+        jLabel5.setText("Vazio para cadastro");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,22 +130,14 @@ public class ManutencaoTouro extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jtfCodigoActionPerformed
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        boolean resultado = TouroDao.alterar(Integer.parseInt(jtfCodigo.getText()), jtfNome.getText(), Integer.parseInt(jtfCodigoRaca.getText()));
-        if (resultado) {
-            JOptionPane.showMessageDialog(null, "Alterado com sucesso!");
-
-            if (listagem != null) {
-                listagem.atualizarTabela();
-            }
-            dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro!");
-        }
-    }//GEN-LAST:event_btnAlterarActionPerformed
-
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        boolean resultado = TouroDao.inserir(jtfNome.getText(), Integer.parseInt(jtfCodigoRaca.getText()));
+        boolean resultado;
+        if(jtfCodigo.getText().equals("")){
+             resultado = TouroDao.inserir(jtfNome.getText(), Integer.parseInt(jtfCodigoRaca.getText()));
+        }else{
+             resultado = TouroDao.alterar(Integer.parseInt(jtfCodigo.getText()), jtfNome.getText(), Integer.parseInt(jtfCodigoRaca.getText()));
+        }
+         
         if (resultado) {
             JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
 
@@ -225,13 +209,13 @@ public class ManutencaoTouro extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jtfCodigo;
     private javax.swing.JTextField jtfCodigoRaca;

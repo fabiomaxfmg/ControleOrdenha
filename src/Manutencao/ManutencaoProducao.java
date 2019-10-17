@@ -53,8 +53,6 @@ public class ManutencaoProducao extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Produção em litros:");
 
-        jtfData.setEnabled(false);
-
         jtfProducao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfProducaoActionPerformed(evt);

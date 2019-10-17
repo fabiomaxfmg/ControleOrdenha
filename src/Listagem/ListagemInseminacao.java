@@ -1,6 +1,7 @@
 package Listagem;
 
-import Manutencao.ManutencaoInseminacao;
+import Manutencao.UnusedInseminacaoMan;
+import Views.InseminacaoView;
 import dao.InseminacaoDao;
 import dao.Ins_SituacaoDao;
 import java.util.List;
@@ -113,7 +114,7 @@ public class ListagemInseminacao extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        ManutencaoInseminacao manutencao = new ManutencaoInseminacao(null, true, this);
+        InseminacaoView manutencao = new InseminacaoView();
         manutencao.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 

@@ -2,6 +2,7 @@
 package Listagem;
 
 import Manutencao.ManutencaoProducao;
+import Views.ProducaoView;
 import dao.ProducaoDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -101,7 +102,7 @@ public class ListagemProducao extends javax.swing.JDialog {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        ManutencaoProducao manutencao = new ManutencaoProducao(null, true, this);
+        ProducaoView manutencao = new ProducaoView(null, true, this);
         manutencao.setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 
