@@ -23,14 +23,15 @@ public class ListagemProducaoView extends javax.swing.JFrame {
     }
     public void atualizarTabela() {
         DefaultTableModel modelo = new DefaultTableModel();
-       
+       modelo.addColumn("Código");
         modelo.addColumn("Data");
         modelo.addColumn("Produção em litros");
         modelo.addColumn("Média por ordenha útil");
+        modelo.addColumn("Nrº de ordenhas úteis");
         
         List<Producao> resultados = ProducaoDao.consultar();
         for (Producao linha : resultados) {
-            String[] aa = {linha.getData().toString(),Integer.toString(linha.getProducao_litros()),Double.toString(linha.getMediapervaca())};
+            String[] aa = {Integer.toString(linha.getCodigo()),linha.getData().toString(),Integer.toString(linha.getProducao_litros()),Double.toString(linha.getMediapervaca()),Integer.toString(linha.getNr_ordenha_uteis())};
             modelo.addRow(aa);
         }
         tabela.setModel(modelo);
@@ -69,15 +70,16 @@ public class ListagemProducaoView extends javax.swing.JFrame {
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Data", "Producao"
+                "Código", "Data", "Producao", "Média per vaca", "Nrº de ordenhas úteis"
             }
         ));
+        tabela.setToolTipText("");
         jScrollPane2.setViewportView(tabela);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -91,13 +93,14 @@ public class ListagemProducaoView extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(btnAdicionar)
-                        .addGap(55, 55, 55)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(113, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(btnAdicionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar)
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

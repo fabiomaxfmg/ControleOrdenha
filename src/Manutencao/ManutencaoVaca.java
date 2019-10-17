@@ -1,10 +1,13 @@
 package Manutencao;
 
 import Listagem.ListagemVaca;
+import Views.ListagemVacaView;
 import dao.RacaDao;
 import dao.TouroDao;
 import dao.VacaDao;
 import dao.Vaca_situacaoDao;
+import java.awt.Frame;
+import java.awt.Window;
 import javax.swing.JOptionPane;
 import model.Raca;
 import model.Touro;
@@ -13,14 +16,29 @@ import model.vaca_situacao;
 public class ManutencaoVaca extends javax.swing.JDialog {
 
     private ListagemVaca listagem;
+    private ListagemVacaView test;
 
-    public ManutencaoVaca(java.awt.Frame parent, boolean modal) {
+    public ManutencaoVaca(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         populateSit();
         populateTour();
+        //System.out.println(parent.getClass());
         populateRaca();
+//        System.out.println(parent.getClass().getName());
+ //       if (parent.getClass().getName() == "Views.ListagemVacaView"){
+  //          System.out.println("E igual");
+            
+  //      }
     }
+
+    public ManutencaoVaca(Frame owner, boolean modal) {
+        super(owner, modal);
+        initComponents();
+    }
+
+    
+    
     
     
     public ManutencaoVaca(java.awt.Frame parent, boolean modal, ListagemVaca listagem) {
@@ -32,8 +50,8 @@ public class ManutencaoVaca extends javax.swing.JDialog {
         populateRaca();
         this.listagem = listagem;
 
-        btnAlterar.setEnabled(false);
-        btnExcluir.setEnabled(false);
+        btnAlterar1.setEnabled(false);
+        btnExcluir1.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -201,19 +219,15 @@ public class ManutencaoVaca extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel11)
-                                    .addGap(29, 29, 29)
-                                    .addComponent(jcbRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel12)
-                                        .addComponent(situacao))
-                                    .addGap(29, 29, 29)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jcbTouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(277, 277, 277)))
+                                .addComponent(jLabel11)
+                                .addComponent(situacao)
+                                .addComponent(jLabel12))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jcbTouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcbRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcbSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(248, 248, 248)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
                         .addComponent(btnAdicionar1)
@@ -305,6 +319,7 @@ private void jtfCodigoActionPerformed(java.awt.event.ActionEvent evt) {
         } else {
             JOptionPane.showMessageDialog(null, "Erro!");
         }
+     //   if(parent.getClass() == Views.ListagemVacaView)
     }//GEN-LAST:event_btnAdicionar1ActionPerformed
     private void limparCampos() {
         jtfCodigo1.setText("");

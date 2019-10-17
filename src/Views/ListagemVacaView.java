@@ -3,15 +3,16 @@ package Views;
 import Listagem.*;
 import Manutencao.ManutencaoVaca;
 import dao.RacaDao;
+import dao.TouroDao;
 import dao.VacaDao;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Vaca;
 
-public class ListagemVacaView extends javax.swing.JDialog {
+public class ListagemVacaView extends javax.swing.JFrame {
 
     public ListagemVacaView(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        //super(parent, modal);
         initComponents();
 
         atualizarTabela();
@@ -23,13 +24,16 @@ public class ListagemVacaView extends javax.swing.JDialog {
 
     public void atualizarTabela() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nome");
         modelo.addColumn("Código");
+        modelo.addColumn("Nome");
         modelo.addColumn("Data de nascimento");
+        modelo.addColumn("raça");
+        modelo.addColumn("Mãe");
+        modelo.addColumn("Touro");
         List<Vaca> resultados = VacaDao.consultar();
         for (Vaca linha : resultados) {
             System.out.println(linha.getNome());
-            String[] aa = {linha.getNome(),Integer.toString(linha.getBrinco()),linha.getData_nascimento().toString(),RacaDao.consultar(linha.getCod_raca()).getDescricao(),Integer.toString(linha.getBrinco_mae()),Integer.toString(linha.getCod_touro())};
+            String[] aa = {Integer.toString(linha.getBrinco()),linha.getNome(),linha.getData_nascimento().toString(),RacaDao.consultar(linha.getCod_raca()).getDescricao(),VacaDao.consultar(linha.getBrinco_mae()).getNome(),TouroDao.consultar(linha.getCod_touro()).getNome()};
             modelo.addRow(aa);
         }
         tabela.setModel(modelo);
@@ -116,18 +120,10 @@ public class ListagemVacaView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-/*        boolean resultado = InseminacaoDao.inserir(jtfData.getText(), jtfObservacao.getText(), jtfCodigoInseminador.getText(), jtfCodigoVaca.getText());
-        if (resultado) {
-            JOptionPane.showMessageDialog(null, "Inserido com sucesso!");
-
-            if (listagem != null) {
-                listagem.atualizarTabela();
-            }
-            limparCampos();
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro!");
-        }
-        */
+      //  System.out.println(tabela.getModel().getValueAt(tabela.getSelectedRow(),0));
+        ManutencaoVaca form = new ManutencaoVaca(this, true);
+        form.setLocationRelativeTo(null);
+        form.setVisible(true);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

@@ -15,13 +15,14 @@ public class ListagemTouro extends javax.swing.JDialog {
     public ListagemTouro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        atualizarTabela();
     }
     
     public void atualizarTabela() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Código");
         modelo.addColumn("Nome");
-        modelo.addColumn("Código Raça");
+        modelo.addColumn("Raça");
         
         List<Touro> resultados = TouroDao.consultar();
         for (Touro linha : resultados) {

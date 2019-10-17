@@ -143,7 +143,9 @@ public class ManutencaoSituacao extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_GravarActionPerformed
-
+    public void setSelectedIndex(int i){
+        jcsituacao.setSelectedIndex(i);
+    }
     /**
      * @param args the command line arguments
      */

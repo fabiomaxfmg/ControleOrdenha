@@ -27,6 +27,10 @@ public class ManutencaoInseminacao extends javax.swing.JDialog {
 
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
+        for(vaca_situacao v : Vaca_situacaoDao.consultar()){
+            ComboSituacao.addItem(v);
+            
+        }
     }
 
     @SuppressWarnings("unchecked")

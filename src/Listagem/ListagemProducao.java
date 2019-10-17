@@ -17,15 +17,20 @@ public class ListagemProducao extends javax.swing.JDialog {
     }
 
     private ListagemProducao() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
+        atualizarTabela();
+//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     public void atualizarTabela() {
         DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Código");
         modelo.addColumn("Data");
         modelo.addColumn("Produção em litros");
+        modelo.addColumn("Média por vaca");
+        modelo.addColumn("Nº ordenhas úteis");
         List<Producao> resultados = ProducaoDao.consultar();
         for (Producao linha : resultados) {
-            modelo.addRow(new String[]{linha.getData().toString(),Integer.toString(linha.getProducao_litros())});
+            modelo.addRow(new String[]{Integer.toString(linha.getCodigo()),linha.getData().toString(),Integer.toString(linha.getProducao_litros()),Double.toString(linha.getMediapervaca()),Integer.toString(linha.getNr_ordenha_uteis())});
         }
         tabela.setModel(modelo);
     }
@@ -53,13 +58,13 @@ public class ListagemProducao extends javax.swing.JDialog {
 
         tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Data", "Produção em litros"
+                "Codigo", "Data", "Produção em litros", "Media Por Ordenha", "Nº ordenhas úteis"
             }
         ));
         jScrollPane1.setViewportView(tabela);
