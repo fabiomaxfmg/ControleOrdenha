@@ -30,6 +30,18 @@ public class ListagemInsSituacao extends javax.swing.JFrame {
         }
         tabela.setModel(modelo);
     }
+    public ListagemInsSituacao(java.awt.Frame parent, boolean modal){
+       // super(parent,modal);
+        initComponents();
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Código");
+        modelo.addColumn("Descricao");
+        for(Ins_situacao linha : Ins_SituacaoDao.consultar()){
+            String[] aa = {Integer.toString(linha.getCodigo()),linha.getNome()};
+            modelo.addRow(aa);
+        }
+        tabela.setModel(modelo);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

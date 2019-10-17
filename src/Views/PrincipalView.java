@@ -5,6 +5,7 @@
  */
 package Views;
 
+import Listagem.MainListagem;
 import java.sql.Connection;
 import java.sql.SQLException;
 import Manutencao.ManutencaoP7rincipal;
@@ -68,7 +69,7 @@ public class PrincipalView extends javax.swing.JFrame {
             }
         });
 
-        btnRelProducao.setText("Relatório de Produção Leiteira");
+        btnRelProducao.setText("Listagem de entradas");
         btnRelProducao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRelProducaoActionPerformed(evt);
@@ -110,9 +111,9 @@ public class PrincipalView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnCadastros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(btnProducao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnRelProducao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnProducao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRelProducao, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnInseminacao, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,13 +135,13 @@ public class PrincipalView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnProducao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInseminacao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRelProducao, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRelVacas, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastros)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -155,14 +156,14 @@ public class PrincipalView extends javax.swing.JFrame {
 
     private void btnRelProducaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelProducaoActionPerformed
         // TODO add your handling code here:
-        ListagemProducaoView form = new ListagemProducaoView(this, true);
+        MainListagem form = new MainListagem();
         form.setLocationRelativeTo(null);
         form.setVisible(true);
                 
     }//GEN-LAST:event_btnRelProducaoActionPerformed
 
     private void btnRelVacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelVacasActionPerformed
-        ListagemVacaView vacas = new ListagemVacaView(this, true);
+        Report vacas = new Report();
         vacas.setLocationRelativeTo(null);
         vacas.setVisible(true);
     }//GEN-LAST:event_btnRelVacasActionPerformed

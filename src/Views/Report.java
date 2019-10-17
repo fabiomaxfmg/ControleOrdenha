@@ -38,19 +38,8 @@ public class Report extends javax.swing.JFrame {
     public Report() {
         initComponents();
 
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat dfsql = new SimpleDateFormat("yyyy-MM-dd");
-        try{
-        String date1;
-            date1 = dfsql.format(df.parse("1/1/0001"));
-            
-            data = Date.valueOf(date1);
-            date1 = dfsql.format(df.parse("1/1/3111"));
-            data2 = Date.valueOf(date1);
-        }catch(ParseException ex){
-            return;
-        }
-        DefaultTableModel da = new DefaultTableModel();
+        
+        /*/DefaultTableModel da = new DefaultTableModel();
         da.addColumn("Nome");
         da.addColumn("Raça");
         String sql = "SELECT t.nome,r.descricao FROM touro t JOIN raca r ON r.codigo = t.cod_raca;";
@@ -66,8 +55,10 @@ public class Report extends javax.swing.JFrame {
             Logger.getLogger(InseminadorDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         tabela.setModel(da);
+        /*/
     }
     public void showReport(){
+        
         Connection conn = null;
         HashMap ha = new HashMap();
         ha.put("dataMin",data);
@@ -78,7 +69,7 @@ public class Report extends javax.swing.JFrame {
         }catch(SQLException | ClassNotFoundException ex){
             System.out.println("deu ruim");
         }
-        String src = "NANA.jasper";
+        String src = "NANA.jasper"; // o da producao do mes/ano depende do que a véia botar
         
         JasperPrint jasperPrint = null;
         try{
@@ -103,24 +94,9 @@ public class Report extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabela = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        tabela.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Nome do Cidadão", "Raca do mesmo"
-            }
-        ));
-        jScrollPane1.setViewportView(tabela);
 
         jButton1.setText("Imprimir\\Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -134,20 +110,14 @@ public class Report extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(jButton1)
+                .addContainerGap(275, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(173, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(104, 104, 104))
         );
@@ -156,7 +126,19 @@ public class Report extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       showReport();
+       SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dfsql = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+        String date1;
+            date1 = dfsql.format(df.parse("1/1/0001"));
+            
+            data = Date.valueOf(date1);
+            date1 = dfsql.format(df.parse("1/1/3111"));
+            data2 = Date.valueOf(date1);
+        }catch(ParseException ex){
+            return;
+        }
+        showReport();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -196,7 +178,5 @@ public class Report extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
 }

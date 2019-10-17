@@ -115,7 +115,13 @@ public class ListagemInseminacao extends javax.swing.JDialog {
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         InseminacaoView manutencao = new InseminacaoView();
+       manutencao.setLocationRelativeTo(null);
+       manutencao.toFront();
         manutencao.setVisible(true);
+        dispose();
+        
+        //manutencao.requestFocus();
+        
     }//GEN-LAST:event_btnNovoActionPerformed
 
     public static void main(String args[]) {
