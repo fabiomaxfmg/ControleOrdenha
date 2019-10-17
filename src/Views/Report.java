@@ -8,9 +8,13 @@ package Views;
 import conexao.Conexao;
 import dao.InseminadorDao;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -29,8 +33,23 @@ public class Report extends javax.swing.JFrame {
     /**
      * Creates new form Report
      */
+        Date data;
+        Date data2;
     public Report() {
         initComponents();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dfsql = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+        String date1;
+            date1 = dfsql.format(df.parse("1/1/0001"));
+            
+            data = Date.valueOf(date1);
+            date1 = dfsql.format(df.parse("1/1/3111"));
+            data2 = Date.valueOf(date1);
+        }catch(ParseException ex){
+            return;
+        }
         DefaultTableModel da = new DefaultTableModel();
         da.addColumn("Nome");
         da.addColumn("Raça");
@@ -50,17 +69,21 @@ public class Report extends javax.swing.JFrame {
     }
     public void showReport(){
         Connection conn = null;
+        HashMap ha = new HashMap();
+        ha.put("dataMin",data);
+        ha.put("dataMax", data2);
         try{
             conn=Conexao.getConexao();
             
         }catch(SQLException | ClassNotFoundException ex){
             System.out.println("deu ruim");
         }
-        String src = "Daileon.jasper";
+        String src = "NANA.jasper";
         
         JasperPrint jasperPrint = null;
         try{
-            jasperPrint = JasperFillManager.fillReport(src,null,conn);
+            jasperPrint = JasperFillManager.fillReport(src,ha,conn);
+            //jasperPrint = JasperFillManager.fillrep
         }
         catch(JRException ex){
             System.out.println("n deu dnv");
